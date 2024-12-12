@@ -39,7 +39,7 @@ public class FaculteController {
         return faculteRepository.findById(faculteId).map(faculte -> {
             faculte.setName(faculteRequest.getName());
             faculte.setLocation(faculteRequest.getLocation());
-            faculte.setLimit(faculteRequest.getLimit());
+ 
             return faculteRepository.save(faculte);
         }).orElseThrow(() -> new IllegalArgumentException("FaculteId " + faculteId + " not found"));
     }

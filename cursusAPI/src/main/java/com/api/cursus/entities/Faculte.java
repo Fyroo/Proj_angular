@@ -17,8 +17,7 @@ public class Faculte {
     @Column(name = "location", nullable = false)
     private String location;
 
-    @Column(name = "limit")
-    private int limit;
+
 
     // Many-to-many relation avec Faculte
     
@@ -29,10 +28,10 @@ public class Faculte {
     // Default constructor
     public Faculte() {}
 
-    public Faculte(String name, String location, int limit) {
+    public Faculte(String name, String location) {
         this.name = name;
         this.location = location;
-        this.limit = limit;
+
     }
 
 
@@ -60,13 +59,7 @@ public class Faculte {
         this.location = location;
     }
 
-    public int getLimit() {
-        return limit;
-    }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
 
     public List<Master> getMasters() {
         return masters;
