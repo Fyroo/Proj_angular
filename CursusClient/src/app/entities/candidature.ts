@@ -1,5 +1,6 @@
 import { Master } from './master';
 import { Cursus } from './cursus';
+import { User } from './user';
 
 export class Candidature {
   id: number;
@@ -9,6 +10,7 @@ export class Candidature {
   dateDeSoumission: Date;
   master: Master;
   cursus: Cursus[];
+  user: User; // Added the user field to the class
 
   constructor(
     id: number = 0,
@@ -17,7 +19,8 @@ export class Candidature {
     etat: string = '',
     dateDeSoumission: Date = new Date(),
     master: Master = new Master(),
-    cursus: Cursus[] = []
+    cursus: Cursus[] = [],
+    user: User = new User(0, '', '', '', '', []) // Added user initialization
   ) {
     this.id = id;
     this.nom = nom;
@@ -26,5 +29,6 @@ export class Candidature {
     this.dateDeSoumission = dateDeSoumission;
     this.master = master;
     this.cursus = cursus;
+    this.user = user; // Initialize user
   }
 }

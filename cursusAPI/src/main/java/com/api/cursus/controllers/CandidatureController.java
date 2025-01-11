@@ -8,8 +8,11 @@ import com.api.cursus.repositories.MasterRepository;
 import com.api.cursus.repositories.CursusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,6 +23,8 @@ public class CandidatureController {
     private final CandidatureRepository candidatureRepository;
     private final MasterRepository masterRepository;
     private final CursusRepository cursusRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public CandidatureController(CandidatureRepository candidatureRepository, 
@@ -38,20 +43,24 @@ public class CandidatureController {
 
     // Create Candidature 
     @PostMapping("/add/{masterId}")
-    public Candidature createCandidature(@PathVariable(value = "masterId") Long masterId, 
+    public Candidature createCandidature(@PathVariable(value = "masterId") Long masterId,
                                          @Valid @RequestBody Candidature candidature) {
         return masterRepository.findById(masterId).map(master -> {
-            candidature.setMaster(master); // Associate the Candidature with the Master
-            // Optionally, set the Cursus list if provided in the request body
+            candidature.setMaster(master); // Associate with the Master
+            candidature.setEtat("pending"); // Default state
+            candidature.setDateDeSoumission(new Date()); // Default submission date
+
+            // Handle Cursus association if provided
             if (candidature.getCursus() != null && !candidature.getCursus().isEmpty()) {
                 for (Cursus cursus : candidature.getCursus()) {
-                    cursus.setCandidature(candidature); // Set the Candidature for each Cursus
+                    cursus.setCandidature(candidature);
                     cursusRepository.save(cursus);
                 }
             }
             return candidatureRepository.save(candidature);
         }).orElseThrow(() -> new IllegalArgumentException("MasterId " + masterId + " not found"));
     }
+
 
     // Update Candidature
     @PutMapping("/{candidatureId}")

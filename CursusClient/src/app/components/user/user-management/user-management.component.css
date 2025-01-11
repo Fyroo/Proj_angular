@@ -1,0 +1,12 @@
+.user-management {
+    padding: 20px;
+  }
+  
+  .user-form, .user-list, .delete-user {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    margin-left: 10px;
+  }
+  

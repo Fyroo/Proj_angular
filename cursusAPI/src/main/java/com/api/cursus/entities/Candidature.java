@@ -7,6 +7,8 @@ import java.util.List;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Candidature {
 
@@ -29,13 +31,18 @@ public class Candidature {
     private Date dateDeSoumission;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "master_id", nullable = false) 
+    @JoinColumn(name = "master_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Master master;
 
     @OneToMany(mappedBy = "candidature", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cursus> cursus;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+    
     public Candidature() {}
 
     public Candidature(String nom, String prenom, String etat, Date dateDeSoumission, Master master) {
@@ -44,6 +51,16 @@ public class Candidature {
         this.etat = etat;
         this.dateDeSoumission = dateDeSoumission;
         this.master = master;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (etat == null) {
+            etat = "pending";
+        }
+        if (dateDeSoumission == null) {
+            dateDeSoumission = new Date();
+        }
     }
 
     // Getters and Setters
@@ -102,4 +119,13 @@ public class Candidature {
     public void setCursus(List<Cursus> cursus) {
         this.cursus = cursus;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
 }

@@ -1,0 +1,53 @@
+<div class="container">
+    <h2>List of Candidatures for Master: {{ master?.name }}</h2>
+  
+    <!-- Display error message if any -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Display the table if there are candidatures -->
+    <div *ngIf="candidatures.length > 0; else noData">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>État</th>
+            <th>Date de Soumission</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let candidature of candidatures; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ candidature.nom }}</td>
+            <td>{{ candidature.prenom }}</td>
+            <td>{{ candidature.etat }}</td>
+            <td>{{ candidature.dateDeSoumission | date: 'yyyy-MM-dd' }}</td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm"
+                (click)="onEdit(candidature.id)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="onDelete(candidature.id)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- No data available -->
+    <ng-template #noData>
+      <p>No candidatures available for this master.</p>
+    </ng-template>
+  </div>
+  

@@ -12,6 +12,8 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Cursus {
 
@@ -35,6 +37,11 @@ public class Cursus {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Candidature candidature;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+    
     public Cursus() {}
 
     public Cursus(String name, String mention, int duration, Candidature candidature) {
@@ -83,4 +90,13 @@ public class Cursus {
     public void setCandidature(Candidature candidature) {
         this.candidature = candidature;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
 }
