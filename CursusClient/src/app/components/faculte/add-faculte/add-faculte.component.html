@@ -1,0 +1,42 @@
+<div class="container">
+    <h2>Add Faculte</h2>
+  
+    <form (ngSubmit)="onSubmit()" #faculteForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          required
+          [(ngModel)]="faculte.name"
+          name="name"
+          #name="ngModel"
+        />
+        <div *ngIf="name.invalid && name.touched" class="error">
+          Name is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input
+          type="text"
+          id="location"
+          class="form-control"
+          required
+          [(ngModel)]="faculte.location"
+          name="location"
+          #location="ngModel"
+        />
+        <div *ngIf="location.invalid && location.touched" class="error">
+          Location is required.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="faculteForm.invalid">
+        Add Faculte
+      </button>
+    </form>
+  </div>
+  

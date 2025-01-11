@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Masters List</h2>
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specialization</th>
+          <th>Faculte</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let master of masters">
+          <td>{{ master.name }}</td>
+          <td>{{ master.specialization }}</td>
+          <td>{{ master.faculteName || 'N/A' }}</td>
+          <td>
+            <button (click)="deleteMaster(master.id)" class="btn btn-danger">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

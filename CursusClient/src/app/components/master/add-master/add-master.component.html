@@ -1,0 +1,61 @@
+<div class="container">
+  <h2>Add Master</h2>
+
+  <form (ngSubmit)="onSubmit()" #masterForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        required
+        [(ngModel)]="master.name"
+        name="name"
+        #name="ngModel"
+      />
+      <div *ngIf="name.invalid && name.touched" class="error">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="specialization">Specialization</label>
+      <input
+        type="text"
+        id="specialization"
+        class="form-control"
+        required
+        [(ngModel)]="master.specialization"
+        name="specialization"
+        #specialization="ngModel"
+      />
+      <div *ngIf="specialization.invalid && specialization.touched" class="error">
+        Specialization is required.
+      </div>
+    </div>
+
+    <!-- Faculte Dropdown -->
+    <div class="form-group">
+      <label for="faculte">Faculte</label>
+      <select
+        id="faculte"
+        class="form-control"
+        required
+        [(ngModel)]="master.faculte"
+        name="faculte"
+        #faculte="ngModel"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <option [ngValue]="null" disabled>Select a faculte</option>
+        <option *ngFor="let faculte of facultes" [ngValue]="faculte">{{ faculte.name }}</option>
+      </select>
+      <div *ngIf="faculte.invalid && faculte.touched" class="error">
+        Faculte is required.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="masterForm.invalid">
+      Add Master
+    </button>
+  </form>
+</div>

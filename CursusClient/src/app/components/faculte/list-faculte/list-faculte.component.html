@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>List of Facultes</h2>
+    
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let faculte of facultes">
+          <td>{{ faculte.name }}</td>
+          <td>{{ faculte.location }}</td>
+          <td>
+            <button
+              class="btn btn-danger"
+              (click)="deleteFaculte(faculte.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

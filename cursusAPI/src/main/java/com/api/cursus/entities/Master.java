@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Master {
 
@@ -17,21 +21,26 @@ public class Master {
     @Column(name = "specialization", nullable = false)
     private String specialization;
 
+    // Many-to-one relation with Faculte
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "faculte_id", nullable = false)
+    @JsonBackReference
+    private Faculte faculte;
 
-
-    // One-to-many relation avec Candidature (not many-to-many)
+    // One-to-many relation with Candidature
     @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Candidature> candidatures = new ArrayList<>();
 
     public Master() {}
 
-    public Master(String name, String specialization) {
+    public Master(String name, String specialization, Faculte faculte) {
         this.name = name;
         this.specialization = specialization;
+        this.faculte = faculte;
     }
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
@@ -56,7 +65,20 @@ public class Master {
         this.specialization = specialization;
     }
 
+    public Faculte getFaculte() {
+        return faculte;
+    }
 
+    public Long getFaculteId() {
+        return faculte.getId();
+    }
+    public String getFaculteName() {
+        return faculte.getName();
+    }
+
+    public void setFaculte(Faculte faculte) {
+        this.faculte = faculte;
+    }
 
     public List<Candidature> getCandidatures() {
         return candidatures;
@@ -65,5 +87,17 @@ public class Master {
     public void setCandidatures(List<Candidature> candidatures) {
         this.candidatures = candidatures;
     }
-}
 
+ // toString Method
+    @Override
+    public String toString() {
+        return "Master{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", specialization='" + specialization + '\'' +
+               ", faculteId=" + (faculte != null ? faculte.getId() : "null") +
+               ", faculteName='" + (faculte != null ? faculte.getName() : "null") + '\'' +
+               '}';
+    }
+
+}
