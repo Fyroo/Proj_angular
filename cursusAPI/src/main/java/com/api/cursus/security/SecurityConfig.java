@@ -53,7 +53,7 @@ public class SecurityConfig implements WebMvcConfigurer{
                 .requestMatchers("/login", "/register", "/users/login", "/users/register").permitAll()
                 .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/manager/**").hasAuthority("ROLE_MANAGER")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             .and()
             .formLogin()
                 .loginPage("/login")

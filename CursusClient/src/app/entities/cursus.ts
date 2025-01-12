@@ -1,23 +1,21 @@
-import { Candidature } from './candidature';
-
 export class Cursus {
   id: number;
   name: string;
   mention: string;
   duration: number;
-  candidature: Candidature;
+  userId: number;
 
   constructor(
     id: number = 0,
     name: string = '',
     mention: string = '',
     duration: number = 0,
-    candidature: Candidature = new Candidature()
+    userId: number = 0
   ) {
     this.id = id;
     this.name = name;
     this.mention = mention;
     this.duration = duration;
-    this.candidature = candidature;
+    this.userId = userId;
   }
 }

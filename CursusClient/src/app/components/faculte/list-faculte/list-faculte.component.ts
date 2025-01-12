@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FaculteService } from '../../../services/faculte.service'; // Import FaculteService
-import { Faculte } from '../../../entities/faculte'; // Import Faculte class
+import { FaculteService } from '../../../services/faculte.service';
+import { Faculte } from '../../../entities/faculte';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./list-faculte.component.css'],
 })
 export class ListFaculteComponent implements OnInit {
-  facultes: Faculte[] = []; // Array to store the list of faculties
+  facultes: Faculte[] = [];
 
   constructor(private faculteService: FaculteService) {}
 
@@ -19,7 +19,6 @@ export class ListFaculteComponent implements OnInit {
     this.getFacultes(); // Fetch the list of faculties when the component is initialized
   }
 
-  // Method to get the list of faculties
   getFacultes(): void {
     this.faculteService.getFacultes().subscribe(
       (data) => {
@@ -30,22 +29,5 @@ export class ListFaculteComponent implements OnInit {
         console.error('Error fetching facultes:', error);
       }
     );
-  }
-
-  // Method to delete a faculty
-  deleteFaculte(faculteId: number): void {
-    if (confirm('Are you sure you want to delete this faculte?')) {
-      this.faculteService.deleteFaculte(faculteId).subscribe(
-        () => {
-          this.facultes = this.facultes.filter(
-            (faculte) => faculte.id !== faculteId
-          ); // Remove deleted faculte from the list
-          console.log('Faculte deleted successfully');
-        },
-        (error) => {
-          console.error('Error deleting faculte:', error);
-        }
-      );
-    }
   }
 }

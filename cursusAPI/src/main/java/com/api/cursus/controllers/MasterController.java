@@ -69,14 +69,22 @@ public class MasterController {
     // Update Master
     @PutMapping("/{masterId}")
     public ResponseEntity<Master> updateMaster(@PathVariable Long masterId, @Valid @RequestBody Master masterRequest) {
-        Master updatedMaster = masterRepository.findById(masterId).map(master -> {
+        return masterRepository.findById(masterId).map(master -> {
             master.setName(masterRequest.getName());
             master.setSpecialization(masterRequest.getSpecialization());
-            return masterRepository.save(master);
+            
+            // Check if Faculte is being updated
+            if (masterRequest.getFaculte() != null) {
+                Faculte faculte = faculteRepository.findById(masterRequest.getFaculte().getId())
+                        .orElseThrow(() -> new IllegalArgumentException("FaculteId not found"));
+                master.setFaculte(faculte); // Update the faculte if provided
+            }
+
+            Master updatedMaster = masterRepository.save(master);
+            return ResponseEntity.ok(updatedMaster); // Return the updated Master
         }).orElseThrow(() -> new IllegalArgumentException("MasterId " + masterId + " not found"));
-        
-        return ResponseEntity.ok(updatedMaster); // Return the updated Master
     }
+
 
     // Delete Master
     @DeleteMapping("/{masterId}")

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddCandidatureComponent } from './add-candidature.component';
+import { ManageMasterComponent } from './manage-master.component';
 
-describe('AddCandidatureComponent', () => {
-  let component: AddCandidatureComponent;
-  let fixture: ComponentFixture<AddCandidatureComponent>;
+describe('ManageMasterComponent', () => {
+  let component: ManageMasterComponent;
+  let fixture: ComponentFixture<ManageMasterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddCandidatureComponent]
+      imports: [ManageMasterComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddCandidatureComponent);
+    fixture = TestBed.createComponent(ManageMasterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

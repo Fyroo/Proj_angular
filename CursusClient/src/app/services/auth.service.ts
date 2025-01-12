@@ -22,6 +22,7 @@ export class AuthService {
           localStorage.setItem('roles', JSON.stringify(response.role));
           localStorage.setItem('username', response.username);
           localStorage.setItem('userId', response.userId); // Store the username
+          localStorage.setItem('fullname', response.fullname);
           this.userService.setLoggedInUserId(response.userId);
         },
         error: (err) => {

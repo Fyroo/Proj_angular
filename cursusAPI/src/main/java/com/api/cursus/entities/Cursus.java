@@ -32,26 +32,26 @@ public class Cursus {
     @Column(name = "duration")
     private int duration;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "candidature_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Candidature candidature;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
     
     public Cursus() {}
 
-    public Cursus(String name, String mention, int duration, Candidature candidature) {
-        this.name = name;
-        this.mention = mention;
-        this.duration = duration;
-        this.candidature = candidature;
-    }
 
-    public long getId() {
+    public Cursus(long id, @NotBlank(message = "Name is mandatory") String name,
+			@NotBlank(message = "mention is mandatory") String mention, int duration, User user) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.mention = mention;
+		this.duration = duration;
+		this.user = user;
+	}
+
+
+	public long getId() {
         return id;
     }
 
@@ -83,13 +83,6 @@ public class Cursus {
         this.duration = duration;
     }
 
-    public Candidature getCandidature() {
-        return candidature;
-    }
-
-    public void setCandidature(Candidature candidature) {
-        this.candidature = candidature;
-    }
 
 	public User getUser() {
 		return user;

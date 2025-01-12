@@ -38,17 +38,38 @@ public class UserController {
 
     // ResponseDTO class
  // ResponseDTO class
+ // ResponseDTO class
     public class ResponseDTO {
         private String message;
         private String userId;
-        private String username;// Assuming you want to return the userId, modify accordingly
+        private String username;
+        private String fullname;
+        private String email; // Add email field
         private Set<Role> role;
 
-        public ResponseDTO(String message, String userId,String username, Set<Role> role) {
+        public ResponseDTO(String message, String userId, String username, String fullname, Set<Role> role, String email) {
             this.message = message;
             this.userId = userId;
             this.role = role;
-            this.username=username;
+            this.username = username;
+            this.fullname = fullname;
+            this.email = email; // Initialize email field
+        }
+
+        public String getFullname() {
+            return fullname;
+        }
+
+        public void setFullname(String fullname) {
+            this.fullname = fullname;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
         }
 
         public String getMessage() {
@@ -66,6 +87,7 @@ public class UserController {
         public void setUserId(String userId) {
             this.userId = userId;
         }
+
         public String getUsername() {
             return username;
         }
@@ -73,6 +95,7 @@ public class UserController {
         public void setUsername(String username) {
             this.username = username;
         }
+
         public Set<Role> getRole() {
             return role;
         }
@@ -81,6 +104,7 @@ public class UserController {
             this.role = role;
         }
     }
+
 
 
     // Register a new user
@@ -117,7 +141,9 @@ public class UserController {
             "User registered successfully",
             savedUser.getId().toString(),
             savedUser.getUsername(),
-            savedUser.getRoles()
+            savedUser.getFullname(),
+            savedUser.getRoles(),
+            savedUser.getEmail()
         ));
     }
 
@@ -146,21 +172,22 @@ public class UserController {
                 // Use the actual user ID instead of "exampleUserId"
                 String username1 = user.getUsername().toString();
                 String userId = user.getId().toString();
+                String fullname = user.getFullname().toString();
                 Set<Role>  role = user.getRoles();
 
                 // Create a response DTO to send back with the actual user ID
-                ResponseDTO response = new ResponseDTO("Login successful", userId,username1,role);
+                ResponseDTO response = new ResponseDTO("Login successful", userId,username1,fullname,role,null);
                 return ResponseEntity.ok(response);
             } else {
-                return ResponseEntity.status(404).body(new ResponseDTO("User not found", null,null, null ));
+                return ResponseEntity.status(404).body(new ResponseDTO("User not found", null,null,null, null,null ));
             }
 
         } catch (BadCredentialsException e) {
             System.out.println(e);
-            return ResponseEntity.status(401).body(new ResponseDTO("Invalid credentials", null,null, null));
+            return ResponseEntity.status(401).body(new ResponseDTO("Invalid credentials", null,null, null,null,null));
         } catch (Exception e) {
             System.out.println(e);
-            return ResponseEntity.status(500).body(new ResponseDTO("An error occurred during login",null, null,null));
+            return ResponseEntity.status(500).body(new ResponseDTO("An error occurred during login",null, null,null,null,null));
         }
     }
 
@@ -241,6 +268,28 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+ // Get user details by ID
+    @GetMapping("/id/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body("User not found with ID: " + userId);
+        }
+
+        User user = userOpt.get();
+
+        // Prepare response DTO with user details, including email
+        ResponseDTO response = new ResponseDTO(
+            "User found",
+            user.getId().toString(),
+            user.getUsername(),
+            user.getFullname(),
+            user.getRoles(),
+            user.getEmail() // Add email here
+        );
+
+        return ResponseEntity.ok(response);
+    }
 
 
     // DTO class for login

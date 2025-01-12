@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { Cursus } from '../entities/cursus';
-import { Role } from '../entities/role';
-
 @Injectable({
   providedIn: 'root',
 })
 export class CursusService {
-  private apiUrl = 'http://localhost:8080/cursus'; // Backend URL
-  roles: Role[] = JSON.parse(localStorage.getItem('roles') || '[]'); // Explicitly typing roles as Role[]
-  rolesString = this.roles.map((role) => role.name).join(','); // Join the role names into a string
+  private apiUrl = `${environment.apiUrl}/cursus`; // Backend API URL
 
+  // Get roles from localStorage
+  private roles: any[] = JSON.parse(localStorage.getItem('roles') || '[]');
+  private rolesString = this.roles.map((role) => role.name).join(','); // Join the role names into a string
+
+  // Set HTTP headers with roles included
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -21,26 +23,24 @@ export class CursusService {
 
   constructor(private http: HttpClient) {}
 
-  // Get all Cursus
-  getCursusList(): Observable<Cursus[]> {
-    return this.http.get<Cursus[]>(`${this.apiUrl}/list`);
-  }
-
-  // Get a single Cursus by ID
-  getCursusById(cursusId: number): Observable<Cursus> {
-    return this.http.get<Cursus>(`${this.apiUrl}/${cursusId}`);
-  }
-
   // Create a new Cursus
-  addCursus(cursus: Cursus): Observable<Cursus> {
+  createCursus(userId: number, cursus: Cursus): Observable<Cursus> {
     return this.http.post<Cursus>(
-      `${this.apiUrl}/add`,
+      `${this.apiUrl}?userId=${userId}`,
       cursus,
       this.httpOptions
     );
   }
 
-  // Update an existing Cursus
+  // Get all Cursuses for a specific User
+  getCursusesByUser(userId: number): Observable<Cursus[]> {
+    return this.http.get<Cursus[]>(
+      `${this.apiUrl}/by-user/${userId}`,
+      this.httpOptions
+    );
+  }
+
+  // Update a Cursus
   updateCursus(cursusId: number, cursus: Cursus): Observable<Cursus> {
     return this.http.put<Cursus>(
       `${this.apiUrl}/${cursusId}`,

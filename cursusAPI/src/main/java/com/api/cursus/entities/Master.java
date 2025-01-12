@@ -22,7 +22,7 @@ public class Master {
     private String specialization;
 
     // Many-to-one relation with Faculte
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "faculte_id", nullable = false)
     @JsonBackReference
     private Faculte faculte;
@@ -34,13 +34,20 @@ public class Master {
 
     public Master() {}
 
-    public Master(String name, String specialization, Faculte faculte) {
-        this.name = name;
-        this.specialization = specialization;
-        this.faculte = faculte;
-    }
 
-    // Getters and Setters
+
+    public Master(Long id, String name, String specialization, Faculte faculte, List<Candidature> candidatures) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.specialization = specialization;
+		this.faculte = faculte;
+		this.candidatures = candidatures;
+	}
+
+
+
+	// Getters and Setters
     public Long getId() {
         return id;
     }

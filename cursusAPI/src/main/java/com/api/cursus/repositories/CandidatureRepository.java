@@ -1,9 +1,12 @@
 package com.api.cursus.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import com.api.cursus.entities.Candidature;
+import com.api.cursus.entities.Master;
+import com.api.cursus.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-@Repository
 public interface CandidatureRepository extends JpaRepository<Candidature, Long> {
+    List<Candidature> findByMaster(Master master);
+    List<Candidature> findByUser(User user);
 }

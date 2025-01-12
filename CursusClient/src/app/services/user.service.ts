@@ -47,7 +47,13 @@ export class UserService {
       this.getHttpOptions()
     );
   }
-
+  // Get user details by ID
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(
+      `${this.apiUrl}/id/${userId}`,
+      this.getHttpOptions()
+    );
+  }
   // Update user information
   updateUser(username: string, user: User): Observable<User> {
     return this.http.put<User>(

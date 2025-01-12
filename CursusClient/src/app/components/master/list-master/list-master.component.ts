@@ -1,26 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterService } from '../../../services/master.service';
 import { Master } from '../../../entities/master';
-import { BrowserModule } from '@angular/platform-browser';
+import { CandidatureService } from '../../../services/candidature.service'; // Import the Candidature service
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-master',
   templateUrl: './list-master.component.html',
-  imports: [CommonModule, RouterModule],
   styleUrls: ['./list-master.component.css'],
+  imports: [CommonModule, FormsModule, RouterModule],
 })
 export class ListMasterComponent implements OnInit {
   masters: Master[] = [];
+  userId: number | undefined; // Store the user ID
+  userFullName: string | null = null; // Store the user's full name
 
-  constructor(private masterService: MasterService) {}
+  constructor(
+    private masterService: MasterService,
+    private candidatureService: CandidatureService, // Inject the Candidature service
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getMasters();
+    this.userId = Number(localStorage.getItem('userId')); // Retrieve the userId from localStorage
   }
 
-  // Use the correct method name `getAll` from the service
+  // Fetch all the masters
   getMasters(): void {
     this.masterService.getAll().subscribe((masters) => {
       console.log(masters);
@@ -28,12 +36,27 @@ export class ListMasterComponent implements OnInit {
     });
   }
 
-  // Use the correct method name `delete` from the service
-  deleteMaster(id: number): void {
-    if (confirm('Are you sure you want to delete this master?')) {
-      this.masterService.delete(id).subscribe(() => {
-        this.masters = this.masters.filter((master) => master.id !== id);
-      });
+  // Create a candidature for the selected master
+  // Create a candidature for the selected master
+  createCandidature(masterId: number): void {
+    if (!this.userId) {
+      console.error('User is not logged in.');
+      return;
     }
+
+    // Call the Candidature service to create the candidature
+    this.candidatureService
+      .createCandidature(this.userId, masterId) // No need to pass dateDeSoumission or etat
+      .subscribe(
+        (response) => {
+          console.log('Candidature created successfully:', response);
+          alert('Candidature created successfully!');
+          this.router.navigate(['/candidatures']); // Optionally, navigate to a different page after creating the candidature
+        },
+        (error) => {
+          console.error('Error creating candidature:', error);
+          alert('Failed to create candidature.');
+        }
+      );
   }
 }

@@ -1,27 +1,28 @@
 <div class="container">
-    <h2>Masters List</h2>
-  
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Specialization</th>
-          <th>Faculte</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let master of masters">
-          <td>{{ master.name }}</td>
-          <td>{{ master.specialization }}</td>
-          <td>{{ master.faculteName || 'N/A' }}</td>
-          <td>
-            <button (click)="deleteMaster(master.id)" class="btn btn-danger">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <h2>Masters List</h2>
+
+  <!-- Table of Masters -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Specialization</th>
+        <th>Faculty</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let master of masters">
+        <td>{{ master.name }}</td>
+        <td>{{ master.specialization }}</td>
+        <td>{{ master.faculteName }}</td>
+        <td>
+          <!-- Button to create candidature -->
+          <button class="btn btn-info" (click)="createCandidature(master.id)">
+            Create Candidature
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

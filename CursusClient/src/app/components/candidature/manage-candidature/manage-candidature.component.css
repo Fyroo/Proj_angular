@@ -1,0 +1,36 @@
+.loading {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: blue;
+  }
+  
+  .error {
+    color: red;
+    font-size: 1.2em;
+  }
+  
+  .candidature-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .candidature-table th,
+  .candidature-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .delete-btn:hover {
+    background-color: darkred;
+  }
+  
