@@ -1,0 +1,51 @@
+<div class="profile-container" *ngIf="!loading">
+    <h2>User Profile</h2>
+  
+    <!-- View Mode -->
+    <div *ngIf="!editMode">
+      <p><strong>Full Name:</strong> {{ user?.fullname }}</p>
+      <p><strong>Email:</strong> {{ user?.email }}</p>
+      <button (click)="toggleEditMode()">Edit Profile</button>
+    </div>
+  
+    <!-- Edit Mode -->
+    <form *ngIf="editMode" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+      <div>
+        <label for="fullname">Full Name</label>
+        <input id="fullname" formControlName="fullname" type="text" />
+        <div *ngIf="profileForm.get('fullname')?.invalid && profileForm.get('fullname')?.touched">
+          <small *ngIf="profileForm.get('fullname')?.hasError('required')">
+            Full name is required.
+          </small>
+          <small *ngIf="profileForm.get('fullname')?.hasError('minlength')">
+            Full name must be at least 2 characters long.
+          </small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" />
+        <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+          <small *ngIf="profileForm.get('email')?.hasError('required')">
+            Email is required.
+          </small>
+          <small *ngIf="profileForm.get('email')?.hasError('email')">
+            Invalid email address.
+          </small>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="profileForm.invalid">Save Changes</button>
+      <button type="button" (click)="toggleEditMode()">Cancel</button>
+    </form>
+  
+    <div *ngIf="error" class="error">
+      <p>{{ error }}</p>
+    </div>
+  </div>
+  
+  <div class="loading" *ngIf="loading">
+    <p>Loading...</p>
+  </div>
+  

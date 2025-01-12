@@ -7,6 +7,9 @@ import java.util.List;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Candidature {
 
@@ -14,13 +17,6 @@ public class Candidature {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotBlank(message = "Nom is mandatory")
-    @Column(name = "nom")
-    private String nom;
-
-    @NotBlank(message = "Prenom is mandatory")
-    @Column(name = "prenom")
-    private String prenom;
 
     @Column(name = "etat")
     private String etat;
@@ -28,22 +24,38 @@ public class Candidature {
     @Column(name = "date_de_soumission")
     private Date dateDeSoumission;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "master_id", nullable = false) 
-    @OnDelete(action = OnDeleteAction.CASCADE)
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "master_id", nullable = false)
+    @JsonBackReference
     private Master master;
 
-    @OneToMany(mappedBy = "candidature", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cursus> cursus;
-
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+    
     public Candidature() {}
 
-    public Candidature(String nom, String prenom, String etat, Date dateDeSoumission, Master master) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.etat = etat;
-        this.dateDeSoumission = dateDeSoumission;
-        this.master = master;
+    public Candidature(long id, String etat, Date dateDeSoumission, Master master, User user) {
+		super();
+		this.id = id;
+		this.etat = etat;
+		this.dateDeSoumission = dateDeSoumission;
+		this.master = master;
+		this.user = user;
+	}
+
+
+
+	@PrePersist
+    public void prePersist() {
+        if (dateDeSoumission == null) {
+            dateDeSoumission = new Date(); // Set to current date and time
+        }
+        if (etat == null) {
+            etat = "pending"; // Default state
+        }
     }
 
     // Getters and Setters
@@ -55,21 +67,7 @@ public class Candidature {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
-    }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
 
     public String getEtat() {
         return etat;
@@ -95,11 +93,14 @@ public class Candidature {
         this.master = master;
     }
 
-    public List<Cursus> getCursus() {
-        return cursus;
-    }
 
-    public void setCursus(List<Cursus> cursus) {
-        this.cursus = cursus;
-    }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
 }

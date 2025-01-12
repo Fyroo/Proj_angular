@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Faculte {
 
@@ -16,13 +21,10 @@ public class Faculte {
 
     @Column(name = "location", nullable = false)
     private String location;
-
-
-
-    // Many-to-many relation avec Faculte
     
-
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "faculte")
+    @JsonManagedReference
+    @JsonIgnoreProperties
     private List<Master> masters = new ArrayList<>();
 
     // Default constructor

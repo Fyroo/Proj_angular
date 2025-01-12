@@ -1,0 +1,49 @@
+<div class="container">
+    <h2>Manage Cursus</h2>
+    <form (ngSubmit)="saveCursus()" #cursusForm="ngForm">
+      <div>
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="newCursus.name"
+          name="name"
+          required
+        />
+      </div>
+      <div>
+        <label for="mention">Mention:</label>
+        <input
+          type="text"
+          id="mention"
+          [(ngModel)]="newCursus.mention"
+          name="mention"
+          required
+        />
+      </div>
+      <div>
+        <label for="duration">Duration:</label>
+        <input
+          type="number"
+          id="duration"
+          [(ngModel)]="newCursus.duration"
+          name="duration"
+          required
+        />
+      </div>
+      <button type="submit">{{ editMode ? 'Update' : 'Add' }} Cursus</button>
+      <button type="button" (click)="resetForm()" *ngIf="editMode">Cancel</button>
+    </form>
+  
+    <hr />
+  
+    <h3>Your Cursus</h3>
+    <ul>
+      <li *ngFor="let cursus of cursuses">
+        <strong>{{ cursus.name }}</strong> ({{ cursus.mention }} - {{ cursus.duration }} years)
+        <button (click)="editCursus(cursus)">Edit</button>
+        <button (click)="deleteCursus(cursus.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+  

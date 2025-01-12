@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>
+      Cursuses for User: 
+      <span *ngIf="user">{{ user.fullname }} ({{ user.email }})</span>
+    </h2>
+    <ul>
+      <li *ngFor="let cursus of cursuses">
+        <strong>{{ cursus.name }}</strong>
+        (Mention: {{ cursus.mention }}, Duration: {{ cursus.duration }} years)
+      </li>
+    </ul>
+    <p *ngIf="cursuses.length === 0">No Cursuses found for this user.</p>
+  </div>
+  

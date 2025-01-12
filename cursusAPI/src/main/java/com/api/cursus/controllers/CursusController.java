@@ -1,88 +1,77 @@
 package com.api.cursus.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
-import jakarta.validation.Valid;
-
+import com.api.cursus.entities.Cursus;
+import com.api.cursus.entities.User;
+import com.api.cursus.repositories.CursusRepository;
+import com.api.cursus.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.api.cursus.entities.Cursus;
-import com.api.cursus.entities.Candidature;
-import com.api.cursus.repositories.CursusRepository;
-import com.api.cursus.repositories.CandidatureRepository;
+import jakarta.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cursus")
 @CrossOrigin(origins = "*")
 public class CursusController {
 
-    @Autowired
-    private CursusRepository cursusRepository;
+    private final CursusRepository cursusRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private CandidatureRepository candidatureRepository;
-
-    // Get all Cursus
-    @GetMapping("/list")
-    public List<Cursus> getAllCursus() {
-        return (List<Cursus>) cursusRepository.findAll();
+    public CursusController(CursusRepository cursusRepository, UserRepository userRepository) {
+        this.cursusRepository = cursusRepository;
+        this.userRepository = userRepository;
     }
 
-    // Create Cursus
-    @PostMapping("/add")
-    public ResponseEntity<?> createCursus(@Valid @RequestBody Cursus cursus) {
-        try {
-            Long candidatureId = cursus.getCandidature().getId();  // Assuming you send the ID of the Candidature
-            Optional<Candidature> candidature = candidatureRepository.findById(candidatureId);
-            
-            if (!candidature.isPresent()) {
-                return ResponseEntity.badRequest().body("Candidature with ID " + candidatureId + " not found.");
-            }
+    // Create a new Cursus
+    @PostMapping
+    public ResponseEntity<Cursus> createCursus(@RequestParam Long userId, @RequestBody @Valid Cursus cursus) {
+        // Retrieve the User by their ID
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("UserId " + userId + " not found"));
 
-            cursus.setCandidature(candidature.get());
-            Cursus savedCursus = cursusRepository.save(cursus);
+        // Set the User in the Cursus
+        cursus.setUser(user);
 
-            return ResponseEntity.ok(savedCursus);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error while creating Cursus: " + e.getMessage());
-        }
+        // Save the Cursus
+        Cursus savedCursus = cursusRepository.save(cursus);
+        return ResponseEntity.status(201).body(savedCursus); // Return HTTP 201 (Created)
     }
 
-    // Update Cursus
+    // Get all Cursuses for a specific User
+    @GetMapping("/by-user/{userId}")
+    public ResponseEntity<List<Cursus>> getCursusesByUser(@PathVariable Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("UserId " + userId + " not found"));
+        List<Cursus> cursuses = cursusRepository.findByUser(user);
+        return ResponseEntity.ok(cursuses);
+    }
+
+    // Update a Cursus
     @PutMapping("/{cursusId}")
-    public Cursus updateCursus(@PathVariable Long cursusId, @Valid @RequestBody Cursus cursusRequest) {
-        return cursusRepository.findById(cursusId).map(cursus -> {
-            cursus.setName(cursusRequest.getName());
-            cursus.setMention(cursusRequest.getMention());
-            cursus.setDuration(cursusRequest.getDuration());
-            return cursusRepository.save(cursus);
-        }).orElseThrow(() -> new IllegalArgumentException("CursusId " + cursusId + " not found"));
+    public ResponseEntity<Cursus> updateCursus(@PathVariable Long cursusId, @RequestBody @Valid Cursus cursusDetails) {
+        Cursus cursus = cursusRepository.findById(cursusId)
+                .orElseThrow(() -> new IllegalArgumentException("CursusId " + cursusId + " not found"));
+
+        // Update cursus details
+        cursus.setName(cursusDetails.getName());
+        cursus.setMention(cursusDetails.getMention());
+        cursus.setDuration(cursusDetails.getDuration());
+
+        // Save updated cursus
+        Cursus updatedCursus = cursusRepository.save(cursus);
+        return ResponseEntity.ok(updatedCursus);
     }
 
-    // Delete Cursus
+    // Delete a Cursus
     @DeleteMapping("/{cursusId}")
-    public ResponseEntity<?> deleteCursus(@PathVariable Long cursusId) {
+    public ResponseEntity<Object> deleteCursus(@PathVariable Long cursusId) {
         return cursusRepository.findById(cursusId).map(cursus -> {
             cursusRepository.delete(cursus);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build(); // Return HTTP 204 (No Content)
         }).orElseThrow(() -> new IllegalArgumentException("CursusId " + cursusId + " not found"));
-    }
-
-    // Get Cursus by ID
-    @GetMapping("/{cursusId}")
-    public Cursus getCursus(@PathVariable Long cursusId) {
-        Optional<Cursus> c = cursusRepository.findById(cursusId);
-        return c.orElseThrow(() -> new IllegalArgumentException("CursusId " + cursusId + " not found"));
     }
 }

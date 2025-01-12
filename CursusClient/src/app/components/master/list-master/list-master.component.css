@@ -1,0 +1,33 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
+  th, td {
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f8f9fa;
+  }
+  
+  button {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  

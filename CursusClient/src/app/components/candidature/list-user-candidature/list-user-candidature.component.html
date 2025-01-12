@@ -1,0 +1,13 @@
+<div *ngIf="isLoading" class="loading">Loading...</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<ul *ngIf="!isLoading && candidatures.length > 0" class="candidature-list">
+  <li *ngFor="let candidature of candidatures">
+    <strong>{{ candidature.master?.name }}</strong>
+    <p>Status: {{ candidature.etat }}</p>
+  </li>
+</ul>
+
+<p *ngIf="!isLoading && candidatures.length === 0">
+  No candidatures found for this user.
+</p>
