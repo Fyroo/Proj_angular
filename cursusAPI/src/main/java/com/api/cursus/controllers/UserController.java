@@ -4,17 +4,20 @@ import com.api.cursus.entities.User;
 import com.api.cursus.entities.Role;
 import com.api.cursus.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.api.cursus.repositories.RoleRepository;
-
+import java.util.Set;
 import jakarta.validation.Valid;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("/users")
@@ -33,9 +36,58 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // ResponseDTO class
+ // ResponseDTO class
+    public class ResponseDTO {
+        private String message;
+        private String userId;
+        private String username;// Assuming you want to return the userId, modify accordingly
+        private Set<Role> role;
+
+        public ResponseDTO(String message, String userId,String username, Set<Role> role) {
+            this.message = message;
+            this.userId = userId;
+            this.role = role;
+            this.username=username;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+        public Set<Role> getRole() {
+            return role;
+        }
+
+        public void setRole(Set<Role> role) {
+            this.role = role;
+        }
+    }
+
+
     // Register a new user
+ // Register a new user
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
+        // Check if the username is already taken
         Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
         if (existingUser.isPresent()) {
             return ResponseEntity.badRequest().body("Username is already taken.");
@@ -44,39 +96,88 @@ public class UserController {
         // Encrypt the password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        // Fetch the "User" role (role ID = 3)
+        Optional<Role> userRoleOpt = roleRepository.findById(3L);
+        if (userRoleOpt.isEmpty()) {
+            return ResponseEntity.status(500).body("Default role not found. Please ensure the role exists in the database.");
+        }
+
+        Role userRole = userRoleOpt.get();
+
+        // Assign the "User" role to the new user
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
+        user.setRoles(roles);
+
         // Save the new user
         User savedUser = userRepository.save(user);
 
-        return ResponseEntity.ok(savedUser);
+        // Return the saved user details
+        return ResponseEntity.ok(new ResponseDTO(
+            "User registered successfully",
+            savedUser.getId().toString(),
+            savedUser.getUsername(),
+            savedUser.getRoles()
+        ));
     }
+
 
     // Login user
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         try {
-            Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
-            if (userOpt.isEmpty()) {
-                return ResponseEntity.status(401).body("Invalid credentials");
-            }
-            
-            User user = userOpt.get();
-            // Compare the plain password with the hashed password in the database
-            if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                return ResponseEntity.status(401).body("Invalid credentials");
-            }
-
-            // Authenticate the user
-            authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+            // Authenticate user
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    loginRequest.getUsername(),
+                    loginRequest.getPassword()
+                )
             );
-            System.out.println("User logged in: " + loginRequest.getUsername());
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
 
-        return ResponseEntity.ok("Login successful");
+            // Set authentication in SecurityContext
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // Fetch the authenticated user
+            String username = loginRequest.getUsername();
+            Optional<User> userOpt = userRepository.findByUsername(username);
+
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
+                // Use the actual user ID instead of "exampleUserId"
+                String username1 = user.getUsername().toString();
+                String userId = user.getId().toString();
+                Set<Role>  role = user.getRoles();
+
+                // Create a response DTO to send back with the actual user ID
+                ResponseDTO response = new ResponseDTO("Login successful", userId,username1,role);
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(404).body(new ResponseDTO("User not found", null,null, null ));
+            }
+
+        } catch (BadCredentialsException e) {
+            System.out.println(e);
+            return ResponseEntity.status(401).body(new ResponseDTO("Invalid credentials", null,null, null));
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(500).body(new ResponseDTO("An error occurred during login",null, null,null));
+        }
     }
-    // Other methods (getUserByUsername, updateUser, assignRolesToUser)
+
+
+    // Get all users
+    @GetMapping("/")
+    public ResponseEntity<?> getAllUsers() {
+        try {
+            // Fetch all users from the repository
+            Iterable<User> users = userRepository.findAll();
+
+            // Return the list of users in the response
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("An error occurred while retrieving users.");
+        }
+    }
 
     // Get user details by username
     @GetMapping("/{username}")
@@ -109,18 +210,29 @@ public class UserController {
     // Assign roles to a user
     @PutMapping("/{username}/assignRoles")
     public ResponseEntity<?> assignRolesToUser(@PathVariable String username, @RequestBody Set<Long> roleIds) {
+        System.out.println("Received request to assign roles:");
+        System.out.println("Username: " + username);
+        System.out.println("Role IDs: " + roleIds);
+
+        if (roleIds == null || roleIds.isEmpty()) {
+            return ResponseEntity.badRequest().body("Role IDs are missing or empty.");
+        }
+
         Optional<User> userOpt = userRepository.findByUsername(username);
         if (userOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).body("User not found.");
         }
 
         User user = userOpt.get();
         Set<Role> roles = new HashSet<>();
 
         for (Long roleId : roleIds) {
-            // Assuming you have a role repository to fetch roles by ID
             Optional<Role> roleOpt = roleRepository.findById(roleId);
-            roleOpt.ifPresent(roles::add);
+            if (roleOpt.isPresent()) {
+                roles.add(roleOpt.get());
+            } else {
+                return ResponseEntity.status(400).body("Invalid role ID: " + roleId);
+            }
         }
 
         user.setRoles(roles);
@@ -128,6 +240,8 @@ public class UserController {
 
         return ResponseEntity.ok(updatedUser);
     }
+
+
 
     // DTO class for login
     public static class LoginRequest {
@@ -151,4 +265,16 @@ public class UserController {
             this.password = password;
         }
     }
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            return ResponseEntity.status(404).build(); // 404 with no body
+        }
+
+        userRepository.delete(user.get());
+        return ResponseEntity.noContent().build(); // 204 No Content
+    }
+
+
 }

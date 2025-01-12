@@ -1,42 +1,57 @@
 <div class="user-management">
-    <h2>User Management</h2>
-  
-    <!-- User Registration Form -->
-    <div class="user-form">
-      <h3>Register User</h3>
-      <form (ngSubmit)="registerUser()">
-        <label for="username">Username:</label>
-        <input type="text" id="username" [(ngModel)]="user.username" name="username" required />
-  
-        <label for="password">Password:</label>
-        <input type="password" id="password" [(ngModel)]="user.password" name="password" required />
-  
-        <label for="fullname">Full Name:</label>
-        <input type="text" id="fullname" [(ngModel)]="user.fullname" name="fullname" required />
-  
-        <label for="email">Email:</label>
-        <input type="email" id="email" [(ngModel)]="user.email" name="email" required />
-  
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  
-    <!-- List of Users -->
-    <div class="user-list">
-      <h3>Users</h3>
-      <ul>
-        <li *ngFor="let user of users">
-          {{ user.username }} - {{ user.fullname }} - {{ user.email }}
-          <button (click)="usernameToDelete = user.username">Delete</button>
-        </li>
-      </ul>
-    </div>
-  
-    <!-- Delete User Form -->
-    <div class="delete-user">
-      <h3>Delete User</h3>
-      <input type="text" [(ngModel)]="usernameToDelete" placeholder="Enter username to delete" />
-      <button (click)="deleteUser()">Delete User</button>
-    </div>
+  <h2>User Management</h2>
+
+  <!-- User Registration Form -->
+  <!-- <div class="user-form">
+    <h3>Register User</h3>
+    <form (ngSubmit)="registerUser()">
+      <label for="username">Username:</label>
+      <input type="text" id="username" [(ngModel)]="user.username" name="username" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="user.password" name="password" required />
+
+      <label for="fullname">Full Name:</label>
+      <input type="text" id="fullname" [(ngModel)]="user.fullname" name="fullname" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="user.email" name="email" required />
+
+      <button type="submit">Register</button>
+    </form>
+  </div> -->
+
+  <!-- List of Users -->
+  <div class="user-list">
+    <h3>Users</h3>
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.username }} - {{ user.fullname }} - {{ user.email }}
+        <button (click)="usernameToDelete = user.username">Delete</button>
+      </li>
+    </ul>
   </div>
-  
+
+  <!-- Delete User Form -->
+  <div class="delete-user">
+    <h3>Delete User</h3>
+    <input type="text" [(ngModel)]="usernameToDelete" placeholder="Enter username to delete" />
+    <button (click)="deleteUser()">Delete User</button>
+  </div>
+
+  <!-- Assign Roles Form -->
+  <div class="assign-roles">
+    <h3>Assign Roles</h3>
+    <label for="selectUser">Select User:</label>
+    <select id="selectUser" [(ngModel)]="selectedUser">
+      <option *ngFor="let user of users" [value]="user.username">{{ user.username }}</option>
+    </select>
+
+    <label for="selectRoles">Select Roles:</label>
+    <select id="selectRoles" multiple [(ngModel)]="selectedRoles">
+      <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+    </select>
+
+    <button (click)="assignRoles()">Assign Roles</button>
+  </div>
+</div>

@@ -13,9 +13,9 @@ public class Role {
     private RoleName name;
     
     public enum RoleName {
-        ROLE_CANDIDAT,
-        ROLE_MODERATOR,
-        ROLE_ADMIN
+        ROLE_USER,
+        ROLE_MANAGER,
+        ROLE_ADMIN,
     }
 
     // Getters and Setters
@@ -23,7 +23,7 @@ public class Role {
     public Long getId() {
 		return id;
 	}
-
+    public Role() {}
 	public Role(Long id, RoleName name) {
 		super();
 		this.id = id;

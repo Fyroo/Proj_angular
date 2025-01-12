@@ -57,8 +57,8 @@ public class User {
 		return id;
 	}
 	
-
-
+    public User() {}
+ 
 	public User(Long id, String username, String password, String fullname, String email, Set<Role> roles) {
 		super();
 		this.id = id;

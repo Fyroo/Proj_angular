@@ -7,6 +7,8 @@ import { AddCandidatureComponent } from './components/candidature/add-candidatur
 import { ListCandidatureComponent } from './components/candidature/list-candidature/list-candidature.component';
 import { UserManagementComponent } from './components/user/user-management/user-management.component';
 import { LoginComponent } from './components/security/login/login.component';
+import { RegisterComponent } from './components/security/register/register.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 export const routes: Routes = [
   { path: 'masters', component: ListMasterComponent },
   { path: 'add-master', component: AddMasterComponent },
@@ -16,5 +18,7 @@ export const routes: Routes = [
   { path: 'candidatures/:masterId', component: ListCandidatureComponent },
   { path: 'user-management', component: UserManagementComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/user-management', pathMatch: 'full' },
+  { path: 'profile', component: ProfileComponent },
 ];

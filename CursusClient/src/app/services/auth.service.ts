@@ -14,18 +14,25 @@ export class AuthService {
 
   login(username: string, password: string): Observable<any> {
     const loginPayload = { username, password };
-    console.log('Login Payload:', loginPayload);
-    return this.http.post<any>(`${this.apiUrl}/login`, loginPayload).pipe(
-      tap((response) => {
-        // Assume response contains user info
-        this.userService.setLoggedInUserId(response.userId);
+    console.log('Login Payload:', loginPayload); // Log the payload being sent
+    return this.http.post<any>(`${this.apiUrl}/users/login`, loginPayload).pipe(
+      tap({
+        next: (response) => {
+          console.log('Login response:', response);
+          localStorage.setItem('roles', JSON.stringify(response.role));
+          localStorage.setItem('username', response.username);
+          localStorage.setItem('userId', response.userId); // Store the username
+          this.userService.setLoggedInUserId(response.userId);
+        },
+        error: (err) => {
+          console.error('Login request failed:', err);
+        },
       })
     );
   }
 
   logout(): void {
     this.userService.clearLoggedInUserId();
-    // Additionally, you can remove the JWT token if you store it
-    localStorage.removeItem('authToken');
+    localStorage.clear();
   }
 }

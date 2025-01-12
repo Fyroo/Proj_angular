@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
 import { ListMasterComponent } from './components/master/list-master/list-master.component';
 import { AddMasterComponent } from './components/master/add-master/add-master.component';
 import { FormsModule } from '@angular/forms';
@@ -13,12 +12,15 @@ import { AddCandidatureComponent } from './components/candidature/add-candidatur
 import { ListCandidatureComponent } from './components/candidature/list-candidature/list-candidature.component';
 import { UserManagementComponent } from './components/user/user-management/user-management.component';
 import { LoginComponent } from './components/security/login/login.component';
+import { RegisterComponent } from './components/security/register/register.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
+import { NavbarComponent } from './components/dashboard/navbar/navbar.component';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    HeaderComponent,
+    NavbarComponent,
     UserManagementComponent,
     ListMasterComponent,
     AddMasterComponent,
@@ -29,6 +31,8 @@ import { LoginComponent } from './components/security/login/login.component';
     FormsModule,
     CommonModule,
     LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
