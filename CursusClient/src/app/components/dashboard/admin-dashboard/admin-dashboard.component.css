@@ -1,0 +1,88 @@
+.admin-dashboard {
+    background-color: #f4f7f6;
+    color: #2b2f34;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .dashboard-header {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #5f6368;
+  }
+  
+  .dashboard-intro {
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+    color: #5f6368;
+  }
+  
+  .dashboard-sections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .dashboard-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    text-align: left;
+  }
+  
+  .dashboard-section i {
+    font-size: 3rem;
+    color: #ff6f61;
+  }
+  
+  .dashboard-section h2 {
+    font-size: 1.5rem;
+    color: #ff6f61;
+    margin: 15px 0;
+  }
+  
+  .dashboard-section p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-section:hover {
+    transform: translateY(-10px);
+  }
+  
+  .section-btn {
+    background-color: #ff6f61;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px 0;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .section-btn:hover {
+    background-color: #f0544c;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-sections {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .dashboard-section {
+      width: 90%;
+    }
+  }
+  

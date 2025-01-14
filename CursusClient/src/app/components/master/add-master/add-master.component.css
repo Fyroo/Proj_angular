@@ -1,47 +1,73 @@
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  input,
-  select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    font-size: 16px;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-  }
-  
-  .error {
-    color: red;
-    font-size: 12px;
-  }
-  
+.manager-dashboard-container {
+  background-color: #ffffff; /* White background for consistency */
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.dashboard-header {
+  color: #4e9f70; /* Green color for the header */
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.dashboard-intro p {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-bottom: 30px;
+}
+
+.form-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button.btn-primary {
+  background-color: #4e9f70; /* Green button color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button.btn-primary:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+button.btn-primary:hover {
+  background-color: #3b7a58; /* Darker green for hover effect */
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+}
+
+button.btn-primary {
+  margin-top: 20px;
+}
+

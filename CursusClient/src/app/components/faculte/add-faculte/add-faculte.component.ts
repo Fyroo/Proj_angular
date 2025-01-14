@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { FaculteService } from '../../../services/faculte.service'; // Import FaculteService
 import { Faculte } from '../../../entities/faculte'; // Import Faculte class
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-faculte',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-faculte.component.html',
   styleUrls: ['./add-faculte.component.css'],
 })

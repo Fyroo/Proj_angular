@@ -1,8 +1,9 @@
-<div class="container">
-    <h2>Manage Facultes</h2>
-  
-    <!-- Table of Facultes -->
-    <table class="table table-striped">
+<div class="manage-faculte-container">
+  <h2 class="section-header">Manage Facultes</h2>
+
+  <!-- Table of Facultes -->
+  <div class="faculte-table-container">
+    <table class="faculte-table">
       <thead>
         <tr>
           <th>Name</th>
@@ -14,55 +15,51 @@
         <tr *ngFor="let faculte of facultes">
           <td>{{ faculte.name }}</td>
           <td>{{ faculte.location }}</td>
-          <td>
-            <button
-              class="btn btn-primary"
-              (click)="editFaculte(faculte)"
-            >
+          <td class="actions">
+            <button class="btn btn-edit" (click)="editFaculte(faculte)">
               Edit
             </button>
-            <button
-              class="btn btn-danger"
-              (click)="deleteFaculte(faculte.id)"
-            >
+            <button class="btn btn-delete" (click)="deleteFaculte(faculte.id)">
               Delete
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-  
-    <!-- Edit Form -->
-    <div *ngIf="isEditing" class="edit-form">
-      <h3>Edit Faculte</h3>
-      <form (ngSubmit)="saveFaculte()">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            [(ngModel)]="selectedFaculte.name"
-            name="name"
-            class="form-control"
-            required
-          />
-        </div>
-  
-        <div class="form-group">
-          <label for="location">Location</label>
-          <input
-            type="text"
-            id="location"
-            [(ngModel)]="selectedFaculte.location"
-            name="location"
-            class="form-control"
-            required
-          />
-        </div>
-  
-        <button type="submit" class="btn btn-success">Save</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
-      </form>
-    </div>
   </div>
-  
+
+  <!-- Edit Form -->
+  <div *ngIf="isEditing" class="edit-form">
+    <h3 class="form-header">Edit Faculte</h3>
+    <form (ngSubmit)="saveFaculte()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="selectedFaculte.name"
+          name="name"
+          class="form-input"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input
+          type="text"
+          id="location"
+          [(ngModel)]="selectedFaculte.location"
+          name="location"
+          class="form-input"
+          required
+        />
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn btn-save">Save</button>
+        <button type="button" class="btn btn-cancel" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -14,48 +14,118 @@ import { ListCursusComponent } from './components/cursus/list-cursus/list-cursus
 import { ListUserCandidatureComponent } from './components/candidature/list-user-candidature/list-user-candidature.component';
 import { ListMasterCandidatureComponent } from './components/candidature/list-master-candidature/list-master-candidature.component';
 import { ManageCandidatureComponent } from './components/candidature/manage-candidature/manage-candidature.component';
+import { AdminDashboardComponent } from './components/dashboard/admin-dashboard/admin-dashboard.component';
+import { ManagerDashboardComponent } from './components/dashboard/manager-dashboard/manager-dashboard.component';
+import { UserDashboardComponent } from './components/dashboard/user-dashboard/user-dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
 export const routes: Routes = [
-  //this route lets admin manages facultes(delete/update)
-  { path: 'admin/manage-facultes', component: ManageFaculteComponent },
-  //this route lets admin add facultes
-  { path: 'admin/add-faculte', component: AddFaculteComponent },
-  //this route lets admin manage users(delete/update roles)
-  { path: 'admin/user-management', component: UserManagementComponent },
-  //////////////////////////////////////////////
-  //this route lets managers add masters
-  { path: 'manager/add-master', component: AddMasterComponent },
-  //this route lets managers manage masters(delete/update)
-  { path: 'manager/manage-master', component: ManageMasterComponent },
-  //this route lets managers see the cursuses of a candidate(his educational background etc.. to judge accepting his candidature)
-  { path: 'manager/list-cursus/:userId', component: ListCursusComponent },
   {
-    //this route lets managers see the candidatures made for each master and  changes their etat(approved/declined/etc..)
-    path: 'manage-candidatures/master/:masterId',
+    path: 'admin/dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_ADMIN' },
+  },
+  {
+    path: 'manager/dashboard',
+    component: ManagerDashboardComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_MANAGER' },
+  },
+
+  {
+    path: 'dashboard',
+    component: UserDashboardComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_USER' },
+  },
+
+  {
+    path: 'admin/manage-facultes',
+    component: ManageFaculteComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_ADMIN' },
+  },
+  {
+    path: 'admin/add-faculte',
+    component: AddFaculteComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_ADMIN' },
+  },
+  {
+    path: 'admin/user-management',
+    component: UserManagementComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_ADMIN' },
+  },
+  //////////////////////////////////////////////
+  {
+    path: 'manager/add-master',
+    component: AddMasterComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_MANAGER' },
+  },
+  {
+    path: 'manager/manage-master',
+    component: ManageMasterComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_MANAGER' },
+  },
+  {
+    path: 'manager/list-cursus/:userId',
+    component: ListCursusComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_MANAGER' },
+  },
+  {
+    path: 'manager/manage-candidatures/master/:masterId',
     component: ManageCandidatureComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_MANAGER' },
   },
   ///////////////////////////////////////////
-  //this route lets any user see the list of facultes available
-  { path: 'facultes', component: ListFaculteComponent },
-  //this route lets any user see the list of masters available and make his candidature
-  { path: 'masters', component: ListMasterComponent },
-  //this route lets users manage their cursus(add/edit/delete)
-  { path: 'mes-cursus', component: ManageCursusComponent },
-  //this route lets users see their all candidatures for a specefic master
+  {
+    path: 'facultes',
+    component: ListFaculteComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_USER' },
+  },
+  {
+    path: 'masters',
+    component: ListMasterComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_USER' },
+  },
+
+  {
+    path: 'mes-cursus',
+    component: ManageCursusComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_USER' },
+  },
+
   {
     path: 'candidatures/master/:masterId',
     component: ListMasterCandidatureComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_USER' },
   },
-  //this route lets users see their own candidatures for each master
+
   {
     path: 'candidatures/user/:userId',
     component: ListUserCandidatureComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_USER' },
   },
-  //user profile
-  { path: 'profile', component: ProfileComponent },
-  //login
+
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'ROLE_USER' },
+  },
+
   { path: 'login', component: LoginComponent },
-  //register
   { path: 'register', component: RegisterComponent },
 
-  { path: '', redirectTo: '/profile', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

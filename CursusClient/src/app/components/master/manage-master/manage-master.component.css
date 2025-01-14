@@ -1,0 +1,74 @@
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  h2 {
+    color: #4e9f70; /* Green color for the header */
+    text-align: center;
+  }
+  
+  .table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .table th,
+  .table td {
+    text-align: left;
+    padding: 10px;
+  }
+  
+  .table th {
+    background-color: #f7f7f7;
+  }
+  
+  .section-btn {
+    background-color: #4e9f70; /* Green button color */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .section-btn:hover {
+    background-color: #3b7a58; /* Darker green for hover effect */
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .btn {
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    margin-left: 10px;
+  }
+  
+  .btn-primary {
+    background-color: #4e9f70; /* Green button color */
+    color: #fff;
+  }
+  
+  .btn-danger {
+    background-color: #f44336;
+    color: #fff;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+  }
+  

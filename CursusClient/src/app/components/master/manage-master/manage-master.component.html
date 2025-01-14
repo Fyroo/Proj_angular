@@ -1,54 +1,61 @@
 <div class="container">
-    <h2>Manage Masters</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Specialization</th>
-          <th>Faculte</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let master of masters">
-          <td *ngIf="!isEditing[master.id]">{{ master.name }}</td>
-          <td *ngIf="!isEditing[master.id]">{{ master.specialization }}</td>
-          <td *ngIf="!isEditing[master.id]">{{ master.faculteName  }}</td>
-  
-          <td *ngIf="isEditing[master.id]">
-            <input type="text" [(ngModel)]="master.name" class="form-control" />
-          </td>
-          <td *ngIf="isEditing[master.id]">
-            <input type="text" [(ngModel)]="master.specialization" class="form-control" />
-          </td>
-          <td *ngIf="isEditing[master.id]">
-            <select [(ngModel)]="master.faculte" name="faculte" class="form-control">
-                <option *ngFor="let faculte of facultes" [ngValue]="faculte">
-                  {{ faculte.name }}
-                </option>
-              </select>
-              
-          </td>
-  
-          <td>
-            <button (click)="toggleEdit(master.id)" class="btn btn-secondary">
-              {{ isEditing[master.id] ? 'Cancel' : 'Edit' }}
-            </button>
-  
-            <button *ngIf="isEditing[master.id]" (click)="saveMaster(master)" class="btn btn-primary" style="margin-left: 10px;">
-              Save
-            </button>
-            
-            <button
-              (click)="deleteMaster(master.id)"
-              class="btn btn-danger"
-              style="margin-left: 10px;"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <h2>Manage Masters</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Specialization</th>
+        <th>Faculte</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let master of masters">
+        <td *ngIf="!isEditing[master.id]">{{ master.name }}</td>
+        <td *ngIf="!isEditing[master.id]">{{ master.specialization }}</td>
+        <td *ngIf="!isEditing[master.id]">{{ master.faculteName }}</td>
+
+        <td *ngIf="isEditing[master.id]">
+          <input type="text" [(ngModel)]="master.name" class="form-control" />
+        </td>
+        <td *ngIf="isEditing[master.id]">
+          <input type="text" [(ngModel)]="master.specialization" class="form-control" />
+        </td>
+        <td *ngIf="isEditing[master.id]">
+          <select [(ngModel)]="master.faculte" name="faculte" class="form-control">
+            <option *ngFor="let faculte of facultes" [ngValue]="faculte">
+              {{ faculte.name }}
+            </option>
+          </select>
+        </td>
+
+        <td>
+          <button (click)="toggleEdit(master.id)" class="btn btn-secondary">
+            {{ isEditing[master.id] ? 'Cancel' : 'Edit' }}
+          </button>
+          
+          <button *ngIf="isEditing[master.id]" (click)="saveMaster(master)" class="btn btn-primary" style="margin-left: 10px;">
+            Save
+          </button>
+          
+          <button
+            (click)="deleteMaster(master.id)"
+            class="btn btn-danger"
+            style="margin-left: 10px;"
+          >
+            Delete
+          </button>
+
+          <!-- Button to manage candidatures for this master -->
+          <button
+            [routerLink]="['/manager/manage-candidatures/master', master.id]"
+            class="btn btn-info"
+            style="margin-left: 10px;"
+          >
+            Manage Candidatures
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,15 +1,15 @@
-<app-navbar></app-navbar>
-<div>
-    <nav>
-      <ul>
-        <li><a routerLink="/masters" class="btn btn-primary">Masters List</a></li>
-        <li><a routerLink="/add-master" class="btn btn-primary">Add Master</a></li>
-        <li> <a routerLink="/add-faculte" class="btn btn-primary">Add New Faculte</a></li>
-        <a routerLink="['/add-candidature', masterId]" class="btn btn-success">Add Candidature</a>
-        <a routerLink="['/candidatures', masterId]"class="btn btn-info">View Candidatures</a>
-        
+<!-- App Layout Container -->
+<div class="app-container">
+  <!-- Include the Navbar Component -->
+  <app-navbar></app-navbar>
 
-      </ul>
-    </nav>
-    <router-outlet></router-outlet>
-  </div>
+  <!-- Main Content Section -->
+  <main class="app-main-content">
+    <router-outlet></router-outlet> <!-- Displays routed components here -->
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="app-footer">
+    <p>&copy; 2025 Cursus. All rights reserved.</p>
+  </footer>
+</div>

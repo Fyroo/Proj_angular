@@ -1,13 +1,29 @@
+<div class="header-section">
+  <h2>Your Candidatures</h2>
+  <p class="subtitle">Keep track of your applications and their current status.</p>
+</div>
+
 <div *ngIf="isLoading" class="loading">Loading...</div>
 <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-<ul *ngIf="!isLoading && candidatures.length > 0" class="candidature-list">
-  <li *ngFor="let candidature of candidatures">
-    <strong>{{ candidature.master?.name }}</strong>
-    <p>Status: {{ candidature.etat }}</p>
-  </li>
-</ul>
+<div class="candidature-container" *ngIf="!isLoading && candidatures.length > 0">
+  <div class="candidature-card" *ngFor="let candidature of candidatures">
+    <div class="card-header">
+      <i class="icon fas fa-graduation-cap"></i>
+      <h3 class="master-name">{{ candidature.master.name }}</h3>
+    </div>
+    <p class="status">
+      <strong>Status:</strong> 
+      <span [ngClass]="getStatusClass(candidature.etat)">{{ candidature.etat }}</span>
+    </p>
+    <p class="card-footer">
+      <span class="extra-info">Specialization: {{ candidature.master.specialization || 'N/A' }}</span>
+    </p>
+  </div>
+</div>
 
-<p *ngIf="!isLoading && candidatures.length === 0">
+<p class="no-candidatures" *ngIf="!isLoading && candidatures.length === 0">
   No candidatures found for this user.
+  <br />
+  <a href="/masters" class="action-link">Explore available masters</a>
 </p>

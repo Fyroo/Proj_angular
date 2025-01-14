@@ -1,33 +1,77 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .table {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  button {
-    margin-top: 10px;
-  }
-  
-  th, td {
-    text-align: center;
-  }
-  
-  th {
-    background-color: #f8f9fa;
-  }
-  
-  button {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-  
+.masters-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f1f5f9; /* Light background */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header-section h2 {
+  font-size: 2rem;
+  color: #264653; /* Dashboard primary title color */
+}
+
+.header-section .subtitle {
+  font-size: 1rem;
+  color: #6b7280; /* Muted subtitle text */
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.masters-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.masters-table th,
+.masters-table td {
+  padding: 15px;
+  text-align: left;
+  font-size: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.masters-table th {
+  background-color: #2a9d8f; /* Dashboard primary color */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.masters-table tr:nth-child(even) {
+  background-color: #f9fafb; /* Alternating row background */
+}
+
+.masters-table td {
+  color: #374151;
+}
+
+.masters-table tr:hover {
+  background-color: #e0f7f5; /* Light hover effect */
+}
+
+.create-btn {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #2a9d8f; /* Primary action button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-btn:hover {
+  background-color: #21867a; /* Darker hover for the primary button */
+}
