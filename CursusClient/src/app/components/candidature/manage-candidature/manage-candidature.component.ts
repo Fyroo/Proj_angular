@@ -4,7 +4,7 @@ import { CandidatureService } from '../../../services/candidature.service';
 import { Candidature } from '../../../entities/candidature';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-manage-candidature',
   templateUrl: './manage-candidature.component.html',
@@ -19,6 +19,7 @@ export class ManageCandidatureComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private candidatureService: CandidatureService
   ) {}
 
@@ -79,5 +80,8 @@ export class ManageCandidatureComponent implements OnInit {
         }
       );
     }
+  }
+  viewCursus(userId: number | undefined) {
+    this.router.navigate(['/manager/list-cursus', userId]);
   }
 }

@@ -28,6 +28,13 @@
         <button (click)="deleteCandidature(candidature.id)" class="delete-btn">
           Delete
         </button>
+        <!-- Button to view cursus for the user -->
+        <button 
+          (click)="viewCursus(candidature.user?.id)" 
+          class="view-cursus-btn"
+          *ngIf="candidature.user?.id">
+          View Cursus
+        </button>
       </td>
     </tr>
   </tbody>

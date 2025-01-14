@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -24,11 +25,12 @@ public class Master {
     // Many-to-one relation with Faculte
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "faculte_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("faculte-masters")
     private Faculte faculte;
 
     // One-to-many relation with Candidature
-    @OneToMany(mappedBy = "master", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "master", orphanRemoval = true,cascade=CascadeType.REMOVE)
+    @JsonBackReference("master-candidatures")
     @JsonIgnore
     private List<Candidature> candidatures = new ArrayList<>();
 
