@@ -1,0 +1,58 @@
+.cursus-list-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .cursus-list-container h2 {
+    color: #4e9f70; /* Green header color */
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .cursus-list-container h2 span {
+    font-size: 1.2rem;
+    color: #333; /* Secondary color for user details */
+  }
+  
+  .cursus-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cursus-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .cursus-item strong {
+    font-size: 1.1rem;
+    color: #2c3e50; /* Darker text for cursus name */
+  }
+  
+  .cursus-item .details {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .highlight {
+    color: #4e9f70; /* Highlighted text for mention and duration */
+    font-weight: bold;
+  }
+  
+  .no-cursuses {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 20px;
+  }
+  

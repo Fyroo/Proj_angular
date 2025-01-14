@@ -9,6 +9,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Candidature {
@@ -27,17 +29,20 @@ public class Candidature {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "master_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference("master-candidatures")
     private Master master;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference("user-candidatures")
     private User user;
     
     public Candidature() {}
 
-    public Candidature(long id, String etat, Date dateDeSoumission, Master master, User user) {
+
+
+
+	public Candidature(long id, String etat, Date dateDeSoumission, Master master, User user) {
 		super();
 		this.id = id;
 		this.etat = etat;
@@ -45,6 +50,7 @@ public class Candidature {
 		this.master = master;
 		this.user = user;
 	}
+
 
 
 

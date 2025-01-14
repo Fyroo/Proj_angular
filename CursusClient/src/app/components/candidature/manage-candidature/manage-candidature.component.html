@@ -1,38 +1,48 @@
-<div *ngIf="isLoading" class="loading">Loading...</div>
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div class="candidature-management-container">
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-<table *ngIf="!isLoading && candidatures.length > 0" class="candidature-table">
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Status</th>
-      <th>Application Date</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let candidature of candidatures">
-      <td>{{ candidature.user?.fullname }}</td>
-      <td>
-        <select
-          [(ngModel)]="candidature.etat"
-          (change)="updateEtat(candidature, candidature.etat)"
-        >
-          <option value="Pending">Pending</option>
-          <option value="Approved">Approved</option>
-          <option value="Rejected">Rejected</option>
-        </select>
-      </td>
-      <td>{{ candidature.dateDeSoumission | date }}</td>
-      <td>
-        <button (click)="deleteCandidature(candidature.id)" class="delete-btn">
-          Delete
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table *ngIf="!isLoading && candidatures.length > 0" class="candidature-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Status</th>
+        <th>Application Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let candidature of candidatures">
+        <td>{{ candidature.user.fullname }}</td>
+        <td>
+          <select
+            [(ngModel)]="candidature.etat"
+            (change)="updateEtat(candidature, candidature.etat)"
+            class="status-select"
+          >
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </td>
+        <td>{{ candidature.dateDeSoumission | date }}</td>
+        <td>
+          <button (click)="deleteCandidature(candidature.id)" class="delete-btn">
+            Delete
+          </button>
+          <button 
+            (click)="viewCursus(candidature.user.id)" 
+            class="view-cursus-btn"
+            *ngIf="candidature.user.id"
+          >
+            View Cursus
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<p *ngIf="!isLoading && candidatures.length === 0">
-  No candidatures found for this master.
-</p>
+  <p *ngIf="!isLoading && candidatures.length === 0" class="no-candidatures">
+    No candidatures found for this master.
+  </p>
+</div>

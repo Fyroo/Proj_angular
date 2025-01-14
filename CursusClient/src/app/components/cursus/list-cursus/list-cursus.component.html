@@ -1,14 +1,20 @@
-<div class="container">
-    <h2>
-      Cursuses for User: 
-      <span *ngIf="user">{{ user.fullname }} ({{ user.email }})</span>
-    </h2>
-    <ul>
-      <li *ngFor="let cursus of cursuses">
-        <strong>{{ cursus.name }}</strong>
-        (Mention: {{ cursus.mention }}, Duration: {{ cursus.duration }} years)
-      </li>
-    </ul>
-    <p *ngIf="cursuses.length === 0">No Cursuses found for this user.</p>
-  </div>
-  
+<div class="cursus-list-container">
+  <h2>
+    Cursus de Candidate: 
+    <span *ngIf="user">{{ user.fullname }} ({{ user.email }})</span>
+  </h2>
+
+  <ul *ngIf="cursuses.length > 0" class="cursus-list">
+    <li *ngFor="let cursus of cursuses" class="cursus-item">
+      <strong>{{ cursus.name }}</strong>
+      <span class="details">
+        (Mention: <span class="highlight">{{ cursus.mention }}</span>, 
+        Duration: <span class="highlight">{{ cursus.duration }}</span> years)
+      </span>
+    </li>
+  </ul>
+
+  <p *ngIf="cursuses.length === 0" class="no-cursuses">
+    No cursus records found for this user.
+  </p>
+</div>

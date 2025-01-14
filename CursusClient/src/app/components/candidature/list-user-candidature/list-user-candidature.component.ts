@@ -48,4 +48,16 @@ export class ListUserCandidatureComponent implements OnInit {
       }
     );
   }
+  getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'approved':
+        return 'approved';
+      case 'rejected':
+        return 'rejected';
+      case 'pending':
+        return 'pending';
+      default:
+        return '';
+    }
+  }
 }

@@ -1,51 +1,74 @@
-<div class="profile-container" *ngIf="!loading">
-    <h2>User Profile</h2>
-  
+<div class="profile-wrapper" *ngIf="!loading">
+  <div class="profile-header">
+    <img 
+      class="profile-picture" 
+      src="assets/default-avatar.png" 
+      alt="User Avatar"
+    />
+    <h2>{{ user?.fullname }}</h2>
+    <p class="email">{{ user?.email }}</p>
+  </div>
+
+  <div class="profile-content">
     <!-- View Mode -->
-    <div *ngIf="!editMode">
+    <div *ngIf="!editMode" class="profile-details">
+      <h3>Details</h3>
       <p><strong>Full Name:</strong> {{ user?.fullname }}</p>
       <p><strong>Email:</strong> {{ user?.email }}</p>
-      <button (click)="toggleEditMode()">Edit Profile</button>
+      <button class="btn-edit" (click)="toggleEditMode()">Edit Profile</button>
     </div>
-  
+
     <!-- Edit Mode -->
     <form *ngIf="editMode" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-      <div>
+      <h3>Edit Your Profile</h3>
+      <div class="form-group">
         <label for="fullname">Full Name</label>
-        <input id="fullname" formControlName="fullname" type="text" />
-        <div *ngIf="profileForm.get('fullname')?.invalid && profileForm.get('fullname')?.touched">
-          <small *ngIf="profileForm.get('fullname')?.hasError('required')">
+        <input 
+          id="fullname" 
+          formControlName="fullname" 
+          type="text" 
+          placeholder="Enter your full name"
+        />
+        <small *ngIf="profileForm.get('fullname')?.invalid && profileForm.get('fullname')?.touched">
+          <span *ngIf="profileForm.get('fullname')?.hasError('required')">
             Full name is required.
-          </small>
-          <small *ngIf="profileForm.get('fullname')?.hasError('minlength')">
+          </span>
+          <span *ngIf="profileForm.get('fullname')?.hasError('minlength')">
             Full name must be at least 2 characters long.
-          </small>
-        </div>
+          </span>
+        </small>
       </div>
-  
-      <div>
+
+      <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" formControlName="email" type="email" />
-        <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
-          <small *ngIf="profileForm.get('email')?.hasError('required')">
+        <input 
+          id="email" 
+          formControlName="email" 
+          type="email" 
+          placeholder="Enter your email"
+        />
+        <small *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+          <span *ngIf="profileForm.get('email')?.hasError('required')">
             Email is required.
-          </small>
-          <small *ngIf="profileForm.get('email')?.hasError('email')">
+          </span>
+          <span *ngIf="profileForm.get('email')?.hasError('email')">
             Invalid email address.
-          </small>
-        </div>
+          </span>
+        </small>
       </div>
-  
-      <button type="submit" [disabled]="profileForm.invalid">Save Changes</button>
-      <button type="button" (click)="toggleEditMode()">Cancel</button>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="profileForm.invalid" class="btn-save">Save Changes</button>
+        <button type="button" (click)="toggleEditMode()" class="btn-cancel">Cancel</button>
+      </div>
     </form>
-  
-    <div *ngIf="error" class="error">
+
+    <div *ngIf="error" class="error-message">
       <p>{{ error }}</p>
     </div>
   </div>
-  
-  <div class="loading" *ngIf="loading">
-    <p>Loading...</p>
-  </div>
-  
+</div>
+
+<div class="loading" *ngIf="loading">
+  <p>Loading...</p>
+</div>

@@ -1,0 +1,58 @@
+/* App Container Styling */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the content takes the full height of the screen */
+    background-color: #f8f9fa; /* Light background color for the whole app */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Main Content Section Styling */
+  .app-main-content {
+    flex-grow: 1; /* Allow the content to take available space */
+    padding: 20px;
+    background-color: #ffffff; /* White background for the content */
+    border-radius: 8px; /* Rounded corners for content box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow around content */
+    margin: 20px auto; /* Center the content section */
+    width: 90%; /* Make the content width responsive */
+    max-width: 1100px; /* Maximum width for larger screens */
+    min-width: 800px; /* Minimum width for narrower screens */
+  }
+  
+  /* Footer Section Styling */
+  .app-footer {
+    background-color: #343a40; /* Dark footer background */
+    color: white; /* White text */
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+  
+  /* App-wide Typography */
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: #333333; /* Darker text color */
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .app-main-content {
+      padding: 15px;
+      margin: 10px;
+      width: 95%; /* Slightly wider content on smaller screens */
+    }
+  
+    .app-footer {
+      font-size: 12px;
+      padding: 8px;
+    }
+  }
+  

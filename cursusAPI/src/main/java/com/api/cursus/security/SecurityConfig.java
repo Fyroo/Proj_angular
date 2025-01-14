@@ -36,24 +36,24 @@ public class SecurityConfig implements WebMvcConfigurer{
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200") // Replace with your frontend URL
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow DELETE and OPTIONS
+                .allowedOrigins("http://localhost:4200") 
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") 
                 .allowedHeaders("*")
-                .allowCredentials(false); // Allow credentials for CORS
+                .allowCredentials(false);
     }
 
-    @Bean
+    @SuppressWarnings("deprecation")
+	@Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable() // Disable CSRF for simplicity
-            .cors() // Enable CORS
+            .csrf().disable() 
+            .cors() 
             .and()
             .addFilterBefore(new RoleHeaderFilter(), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
                 .requestMatchers("/login", "/register", "/users/login", "/users/register").permitAll()
-                .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
-                .requestMatchers("/manager/**").hasAuthority("ROLE_MANAGER")
-                .anyRequest().permitAll()
+                .anyRequest().hasAuthority("ROLE_USER")
+                //TO-DO add request tailared filtring
             .and()
             .formLogin()
                 .loginPage("/login")
@@ -68,7 +68,6 @@ public class SecurityConfig implements WebMvcConfigurer{
         return http.build();
     }
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Configure authentication with the custom UserDetailsService
         auth.userDetailsService(customUserDetailsService)
             .passwordEncoder(passwordEncoder());
     }

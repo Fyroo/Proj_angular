@@ -22,8 +22,8 @@ public class Faculte {
     @Column(name = "location", nullable = false)
     private String location;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "faculte")
-    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "faculte",cascade=CascadeType.REMOVE)
+    @JsonManagedReference("faculte-masters")
     @JsonIgnoreProperties
     private List<Master> masters = new ArrayList<>();
 

@@ -1,0 +1,150 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f1f5f9; /* Light neutral background for cards */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .header-section h2 {
+    font-size: 2rem;
+    color: #264653; /* Darker shade for titles */
+  }
+  
+  .header-section .subtitle {
+    font-size: 1rem;
+    color: #6b7280; /* Muted text for guidance */
+  }
+  
+  .cursus-form {
+    margin-bottom: 20px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    color: #374151;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .form-group input:focus {
+    border-color: #2a9d8f; /* Match user dashboard accent */
+    box-shadow: 0 0 5px rgba(42, 157, 143, 0.5);
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .primary-btn {
+    background-color: #2a9d8f; /* User dashboard primary accent */
+    color: white;
+  }
+  
+  .primary-btn:hover {
+    background-color: #21867a;
+  }
+  
+  .secondary-btn {
+    background-color: #e76f51; /* Secondary action color */
+    color: white;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #c7543c;
+  }
+  
+  .cursus-list-section {
+    margin-top: 20px;
+  }
+  
+  .cursus-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .cursus-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .cursus-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cursus-details {
+    font-size: 1rem;
+    color: #374151;
+  }
+  
+  .cursus-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .edit-btn {
+    background-color: #f4a261; /* Accent edit button color */
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: #e68c4d;
+  }
+  
+  .delete-btn {
+    background-color: #e76f51; /* Match delete action style */
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c7543c;
+  }
+  
+  .empty-list {
+    text-align: center;
+    color: #6b7280; /* Muted text for empty list */
+    margin-top: 10px;
+  }
+  

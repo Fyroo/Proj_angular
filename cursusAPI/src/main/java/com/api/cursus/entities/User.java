@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -43,14 +45,14 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    //if i remove eager no update and json ignore from cursus
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true,cascade=CascadeType.REMOVE)
+    @JsonBackReference("user-candidatures")
     @JsonIgnore
     private List<Candidature> candidatures = new ArrayList<>();
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true,cascade=CascadeType.REMOVE)
+    @JsonManagedReference("user-cursuss")
     @JsonIgnore
     private List<Cursus> cursuss = new ArrayList<>();
     

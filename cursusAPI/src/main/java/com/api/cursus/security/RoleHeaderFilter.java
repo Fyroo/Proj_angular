@@ -18,7 +18,8 @@ import java.util.List;
 public class RoleHeaderFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(RoleHeaderFilter.class);
 
-    private static final List<String> OPEN_ENDPOINTS = List.of("/login", "/register", "/users/login");
+    // Allow login and register routes to pass through without role header validation
+    private static final List<String> OPEN_ENDPOINTS = List.of("/login", "/register", "/users/login", "/users/register");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -26,17 +27,19 @@ public class RoleHeaderFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         logger.info("Processing request for path: {}", path);
 
-        // Skip open endpoints
+        // Allow open endpoints (login and register) to pass without role validation
         if (OPEN_ENDPOINTS.stream().anyMatch(path::startsWith)) {
             logger.info("Permitting open endpoint: {}", path);
             filterChain.doFilter(request, response);
             return;
         }
 
+        // If roles header is missing or empty, proceed without authentication for open endpoints
         String rolesHeader = request.getHeader("Roles");
         logger.info("Roles header: {}", rolesHeader);
 
         if (rolesHeader == null || rolesHeader.isBlank()) {
+            // If roles are missing for protected endpoints, access is denied
             logger.warn("Roles header is missing or empty. Access denied.");
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Roles header is missing");
             return;

@@ -38,9 +38,8 @@ export class UserManagementComponent implements OnInit {
     );
   }
 
-  // Load roles from backend (dummy implementation; replace with real API call)
+  // Load roles
   loadRoles(): void {
-    // Replace with actual API to fetch roles
     this.roles = [
       { id: 1, name: 'ROLE_ADMIN' },
       { id: 2, name: 'ROLE_MANAGER' },
@@ -60,14 +59,14 @@ export class UserManagementComponent implements OnInit {
   }
 
   // Delete a user by username
-  deleteUser(): void {
-    if (!this.usernameToDelete) {
-      alert('Please enter a username to delete.');
+  deleteUser(username: string): void {
+    if (!username) {
+      alert('No user selected to delete.');
       return;
     }
-    this.userService.deleteUser(this.usernameToDelete).subscribe({
+    this.userService.deleteUser(username).subscribe({
       next: (response) => {
-        console.log('Response from server:', response); // Log response for debugging
+        console.log('Response from server:', response);
         alert('User deleted successfully!');
         this.loadUsers();
       },

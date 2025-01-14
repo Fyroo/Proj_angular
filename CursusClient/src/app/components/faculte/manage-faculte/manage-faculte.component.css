@@ -1,0 +1,140 @@
+.manage-faculte-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .section-header {
+    color: #ff6f61;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .faculte-table-container {
+    margin-bottom: 30px;
+    overflow-x: auto;
+  }
+  
+  .faculte-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .faculte-table th, .faculte-table td {
+    padding: 12px 15px;
+    text-align: left;
+  }
+  
+  .faculte-table th {
+    background-color: #f4f7f6;
+    color: #5f6368;
+    font-weight: 600;
+  }
+  
+  .faculte-table tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .faculte-table tr:hover {
+    background-color: #f4f7f6;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #f0544c;
+  }
+  
+  .btn-edit {
+    background-color: #ff6f61;
+    color: white;
+  }
+  
+  .btn-delete {
+    background-color: #ff4c4c;
+    color: white;
+  }
+  
+  .edit-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .form-header {
+    color: #ff6f61;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    color: #5f6368;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .btn-save {
+    background-color: #5cb85c;
+    color: white;
+  }
+  
+  .btn-cancel {
+    background-color: #f0f0f0;
+    color: #555;
+  }
+  
+  @media (max-width: 768px) {
+    .faculte-table {
+      font-size: 0.9rem;
+    }
+  
+    .edit-form {
+      width: 100%;
+      padding: 20px;
+    }
+  
+    .form-input {
+      font-size: 0.9rem;
+    }
+  }
+  

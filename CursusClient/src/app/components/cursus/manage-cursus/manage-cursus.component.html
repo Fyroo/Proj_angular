@@ -1,49 +1,74 @@
 <div class="container">
+  <div class="header-section">
     <h2>Manage Cursus</h2>
-    <form (ngSubmit)="saveCursus()" #cursusForm="ngForm">
-      <div>
-        <label for="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          [(ngModel)]="newCursus.name"
-          name="name"
-          required
-        />
-      </div>
-      <div>
-        <label for="mention">Mention:</label>
-        <input
-          type="text"
-          id="mention"
-          [(ngModel)]="newCursus.mention"
-          name="mention"
-          required
-        />
-      </div>
-      <div>
-        <label for="duration">Duration:</label>
-        <input
-          type="number"
-          id="duration"
-          [(ngModel)]="newCursus.duration"
-          name="duration"
-          required
-        />
-      </div>
-      <button type="submit">{{ editMode ? 'Update' : 'Add' }} Cursus</button>
-      <button type="button" (click)="resetForm()" *ngIf="editMode">Cancel</button>
-    </form>
-  
-    <hr />
-  
+    <p class="subtitle">Keep track of your educational progress by adding or updating cursus.</p>
+  </div>
+
+  <form (ngSubmit)="saveCursus()" #cursusForm="ngForm" class="cursus-form">
+    <div class="form-group">
+      <label for="name">Cursus Name:</label>
+      <input
+        type="text"
+        id="name"
+        [(ngModel)]="newCursus.name"
+        name="name"
+        required
+        placeholder="Enter cursus name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="mention">Mention:</label>
+      <input
+        type="text"
+        id="mention"
+        [(ngModel)]="newCursus.mention"
+        name="mention"
+        required
+        placeholder="Enter mention (e.g., Excellent)"
+      />
+    </div>
+    <div class="form-group">
+      <label for="duration">Duration (Years):</label>
+      <input
+        type="number"
+        id="duration"
+        [(ngModel)]="newCursus.duration"
+        name="duration"
+        required
+        placeholder="Enter duration in years"
+      />
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn primary-btn">
+        {{ editMode ? 'Update Cursus' : 'Add Cursus' }}
+      </button>
+      <button
+        type="button"
+        class="btn secondary-btn"
+        (click)="resetForm()"
+        *ngIf="editMode"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+
+  <hr />
+
+  <div class="cursus-list-section">
     <h3>Your Cursus</h3>
-    <ul>
-      <li *ngFor="let cursus of cursuses">
-        <strong>{{ cursus.name }}</strong> ({{ cursus.mention }} - {{ cursus.duration }} years)
-        <button (click)="editCursus(cursus)">Edit</button>
-        <button (click)="deleteCursus(cursus.id)">Delete</button>
+    <p *ngIf="cursuses.length === 0" class="empty-list">No cursus found. Start by adding one!</p>
+    <ul *ngIf="cursuses.length > 0" class="cursus-list">
+      <li *ngFor="let cursus of cursuses" class="cursus-item">
+        <div class="cursus-details">
+          <strong>{{ cursus.name }}</strong>
+          <span>({{ cursus.mention }} - {{ cursus.duration }} years)</span>
+        </div>
+        <div class="cursus-actions">
+          <button class="btn edit-btn" (click)="editCursus(cursus)">Edit</button>
+          <button class="btn delete-btn" (click)="deleteCursus(cursus.id)">Delete</button>
+        </div>
       </li>
     </ul>
   </div>
-  
+</div>
