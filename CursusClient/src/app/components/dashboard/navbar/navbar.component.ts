@@ -14,7 +14,11 @@ export class NavbarComponent implements OnInit {
   roles: string[] = []; // Array to hold the roles of the user
 
   constructor(private authService: AuthService, private router: Router) {}
+  isMenuActive = false;
 
+  toggleMenu() {
+    this.isMenuActive = !this.isMenuActive;
+  }
   ngOnInit(): void {
     // Retrieve user data from local storage
     this.username = localStorage.getItem('username') || ''; // Get the username from local storage
@@ -23,8 +27,9 @@ export class NavbarComponent implements OnInit {
     this.roles = roles
       ? JSON.parse(roles).map((role: { name: any }) => role.name)
       : []; // Get roles as an array
+      console.log(this.roles);
   }
-
+  
   // Logout function
   logout(): void {
     this.authService.logout(); // Logout logic from AuthService

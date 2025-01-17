@@ -52,7 +52,7 @@ public class SecurityConfig implements WebMvcConfigurer{
             .addFilterBefore(new RoleHeaderFilter(), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
                 .requestMatchers("/login", "/register", "/users/login", "/users/register").permitAll()
-                .anyRequest().hasAuthority("ROLE_USER")
+                .anyRequest().permitAll()
                 //TO-DO add request tailared filtring
             .and()
             .formLogin()

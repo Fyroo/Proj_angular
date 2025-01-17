@@ -1,36 +1,19 @@
 <div class="admin-dashboard">
     <h1 class="dashboard-header">Admin Dashboard</h1>
-  
     <div class="dashboard-intro">
       <p>Welcome to the admin panel! Manage various aspects of the application below.</p>
     </div>
-  
-    <div class="dashboard-sections">
-      <!-- Manage Facultes Section -->
-      <div class="dashboard-section">
-        <i class="fa fa-university"></i>
-        <h2>Facultes Management</h2>
-        <p>Manage facultes, including adding new facultes and updating or deleting existing ones.</p>
-        <button routerLink="/admin/manage-facultes" class="section-btn">Manage Facultes</button>
-        <button routerLink="/admin/add-faculte" class="section-btn">Add Faculté</button>
-      </div>
-  
-      <!-- Manage Masters Section -->
-      <div class="dashboard-section">
-        <i class="fa fa-graduation-cap"></i>
-        <h2>Masters Management</h2>
-        <p>Manage masters, including adding, updating, and deleting master programs.</p>
-        <button routerLink="/manager/manage-master" class="section-btn">Manage Masters</button>
-        <button routerLink="/manager/add-master" class="section-btn">Add Master</button>
-      </div>
-  
-      <!-- Manage Users Section -->
-      <div class="dashboard-section">
-        <i class="fa fa-users"></i>
-        <h2>User Management</h2>
-        <p>Manage users, including user roles, and permissions.</p>
-        <button routerLink="/admin/user-management" class="section-btn">User Management</button>
-      </div>
+    <div class="dashboard-container" >
+      @for (card of cards; track card.title) {
+        <div class="dashboard-section">
+          <app-card
+            [imageUrl]="card.imageUrl"
+            [title]="card.title"
+            [description]="card.description"
+            [links]="card.link1">
+          </app-card>
+        </div>
+      }
     </div>
   </div>
   

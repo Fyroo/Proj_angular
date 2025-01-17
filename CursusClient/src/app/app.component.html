@@ -1,7 +1,9 @@
 <!-- App Layout Container -->
 <div class="app-container">
   <!-- Include the Navbar Component -->
-  <app-navbar></app-navbar>
+  @if (shouldShowNavbar()) {
+    <app-navbar></app-navbar>
+  }
 
   <!-- Main Content Section -->
   <main class="app-main-content">

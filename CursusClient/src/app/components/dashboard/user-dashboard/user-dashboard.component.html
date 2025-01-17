@@ -1,39 +1,11 @@
 <div class="user-dashboard-container">
-    <h2>Welcome, {{ fullname }}</h2>
-
-  
-    <div class="dashboard-sections">
-      <!-- Faculties -->
-      <div class="dashboard-section">
-        <i class="fas fa-university"></i>
-        <h3>Available Faculties</h3>
-        <p>Browse and explore the available faculties.</p>
-        <button routerLink="/facultes" class="section-btn">View Faculties</button>
-      </div>
-  
-      <!-- Masters -->
-      <div class="dashboard-section">
-        <i class="fas fa-graduation-cap"></i>
-        <h3>Masters Programs</h3>
-        <p>View and apply for master's programs of your choice.</p>
-        <button routerLink="/masters" class="section-btn">Explore Masters</button>
-      </div>
-  
-      <!-- Manage Cursus -->
-      <div class="dashboard-section">
-        <i class="fas fa-book"></i>
-        <h3>Manage Your Cursus</h3>
-        <p>Add, edit, or delete your academic records.</p>
-        <button routerLink="/mes-cursus" class="section-btn">Manage Cursus</button>
-      </div>
-  
-      <!-- Candidatures -->
-      <div class="dashboard-section">
-        <i class="fas fa-file-alt"></i>
-        <h3>Your Applications</h3>
-        <p>Track the status of your applications to master's programs.</p>
-        <button routerLink="/candidatures/user/{{ userId }}" class="section-btn">View Applications</button>
-      </div>
-    </div>
+  <h2>Welcome, {{ fullname }}</h2>
+  <div class="dashboard-sections">
+    @for (card of cards; track card.title) {
+    
+      <app-card [imageUrl]="card.imageUrl" [title]="card.title" [description]="card.description" [links]="card.link1">
+      </app-card>
+    
+    }
   </div>
-  
+</div>

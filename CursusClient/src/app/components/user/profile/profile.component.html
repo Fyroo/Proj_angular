@@ -1,74 +1,57 @@
-<div class="profile-wrapper" *ngIf="!loading">
-  <div class="profile-header">
-    <img 
-      class="profile-picture" 
-      src="assets/default-avatar.png" 
-      alt="User Avatar"
-    />
-    <h2>{{ user?.fullname }}</h2>
-    <p class="email">{{ user?.email }}</p>
-  </div>
+<div class="container">
+  <div class="card">
+    <div class="profile-section">
+      <div class="profile-image">
+        <img src="https://img.icons8.com/bubbles/100/000000/user.png" alt="User-Profile-Image">
 
-  <div class="profile-content">
-    <!-- View Mode -->
-    <div *ngIf="!editMode" class="profile-details">
-      <h3>Details</h3>
-      <p><strong>Full Name:</strong> {{ user?.fullname }}</p>
-      <p><strong>Email:</strong> {{ user?.email }}</p>
-      <button class="btn-edit" (click)="toggleEditMode()">Edit Profile</button>
+      </div>
+      <div class="profile-info">
+        <h2>{{ user?.fullname }}</h2>
+      </div>
+      <p class="title">{{roles[0].name}}</p>
     </div>
 
-    <!-- Edit Mode -->
-    <form *ngIf="editMode" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-      <h3>Edit Your Profile</h3>
-      <div class="form-group">
-        <label for="fullname">Full Name</label>
-        <input 
-          id="fullname" 
-          formControlName="fullname" 
-          type="text" 
-          placeholder="Enter your full name"
-        />
-        <small *ngIf="profileForm.get('fullname')?.invalid && profileForm.get('fullname')?.touched">
-          <span *ngIf="profileForm.get('fullname')?.hasError('required')">
-            Full name is required.
-          </span>
-          <span *ngIf="profileForm.get('fullname')?.hasError('minlength')">
-            Full name must be at least 2 characters long.
-          </span>
-        </small>
+    <div class="info-section">
+      <div class="section-header">
+        <h3>Information</h3>
       </div>
+      <div class="info-grid">
+        <form [formGroup]="profileForm">
+          <div class="info-item">
+            <div class="info-display" *ngIf="!editMode['email']">
+              <div>
+                <p class="label">Email</p>
+                <p class="value">{{ user?.email }}</p>
+              </div>
+              <button class="edit-btn small" (click)="toggleEdit('email')">Edit</button>
+            </div>
+            <div class="edit-form" *ngIf="editMode['email']">
+              <input type="email" formControlName="email">
+              <div class="form-buttons">
+                <button (click)="saveField('email')">Save</button>
+                <button (click)="toggleEdit('email')">Cancel</button>
+              </div>
+            </div>
+          </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-          id="email" 
-          formControlName="email" 
-          type="email" 
-          placeholder="Enter your email"
-        />
-        <small *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
-          <span *ngIf="profileForm.get('email')?.hasError('required')">
-            Email is required.
-          </span>
-          <span *ngIf="profileForm.get('email')?.hasError('email')">
-            Invalid email address.
-          </span>
-        </small>
+          <div class="info-item">
+            <div class="info-display" *ngIf="!editMode['fullname']">
+              <div>
+                <p class="label">Full Name</p>
+                <p class="value">{{ user?.fullname }}</p>
+              </div>
+              <button class="edit-btn small" (click)="toggleEdit('fullname')">Edit</button>
+            </div>
+            <div class="edit-form" *ngIf="editMode['fullname']">
+              <input type="text" formControlName="fullname">
+              <div class="form-buttons">
+                <button (click)="saveField('fullname')">Save</button>
+                <button (click)="toggleEdit('fullname')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
-
-      <div class="form-actions">
-        <button type="submit" [disabled]="profileForm.invalid" class="btn-save">Save Changes</button>
-        <button type="button" (click)="toggleEditMode()" class="btn-cancel">Cancel</button>
-      </div>
-    </form>
-
-    <div *ngIf="error" class="error-message">
-      <p>{{ error }}</p>
     </div>
   </div>
-</div>
-
-<div class="loading" *ngIf="loading">
-  <p>Loading...</p>
 </div>

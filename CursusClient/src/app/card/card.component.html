@@ -1,0 +1,16 @@
+<div class="article">
+    <div class="article-wrapper">
+      <figure class="article-image">
+        <img [src]="imageUrl" [alt]="title" />
+      </figure>
+      <div class="article-body">
+        <h2>{{title}}</h2>
+        <p>{{description}}</p>
+        @for (link of links; track link.name) {
+            <a [href]="link.routerLink" class="read-more">
+               <span class="sr-only">{{link.name}}</span>
+            </a>
+          }
+      </div>
+    </div>
+</div>

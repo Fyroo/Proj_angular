@@ -14,7 +14,7 @@
   
   .header-section h2 {
     font-size: 1.8rem;
-    color: #2a9d8f; /* Dashboard primary color */
+    color: #5f6368; /* Dashboard primary color */
   }
   
   .header-section .subtitle {
@@ -43,7 +43,7 @@
   }
   
   .faculte-table th {
-    background-color: #2a9d8f; /* Header background */
+    background-color: #5f6368; /* Header background */
     color: #ffffff;
     font-weight: bold;
   }

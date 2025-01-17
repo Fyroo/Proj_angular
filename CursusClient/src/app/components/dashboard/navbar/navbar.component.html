@@ -1,63 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-  <div class="container-fluid">
-      <a class="navbar-brand text-white" href="#">Cursus</a>
-      <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-      >
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Left Section -->
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                  <a
-                      class="nav-link active"
-                      routerLink="/acuille"
-                      routerLinkActive="active"
-                      (click)="redirectBasedOnRole()"
-                  >
-                      Accueil
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active" href="/facultes">Liste des Facultés</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active" href="/masters">Liste des Masters</a>
-              </li>
-          </ul>
-
-          <!-- Right Section -->
-          <div class="d-flex">
-              <ul class="navbar-nav">
-                  <li class="nav-item dropdown">
-                      <a
-                          class="nav-link dropdown-toggle"
-                          href="javascript:void(0)"
-                          role="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                      >
-                          <i class="bi bi-person-circle"></i>
-                          {{ fullname }}
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                          <li>
-                              <a class="dropdown-item" href="/profile">Profile</a>
-                          </li>
-                          <li>
-                              <a class="dropdown-item" (click)="logout()">Logout</a>
-                          </li>
-                      </ul>
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </div>
-</nav>
+<nav>
+    <a href="#" class="brand unclickable">Cursus</a>
+    
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+    
+    <ul class="nav-menu" [class.active]="isMenuActive">
+      <li class="nav-item">
+        <a routerLink="/acuille" routerLinkActive="active" (click)="redirectBasedOnRole()">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/facultes">Liste des Facultés</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/masters">Liste des Masters</a>
+      </li>
+      
+      <li class="nav-item dropdown">
+        <i class="bi bi-person-circle"></i>
+        <a class="">{{ fullname }}</a>
+        
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li class="dropdown-item">
+                    <a  routerLink="/profile">Profile</a>
+                </li>
+                <li class="dropdown-item">
+                    <a  (click)="logout()">Logout</a>
+                </li>
+            </ul>
+        
+      </li>
+    </ul>
+  </nav>

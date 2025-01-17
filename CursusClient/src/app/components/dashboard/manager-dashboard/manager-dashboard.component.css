@@ -1,8 +1,9 @@
 .manager-dashboard-container {
     padding: 20px;
-    background-color: #f4f6f9;
+    background-color: #fff;
     color: #333;
     border-radius: 8px;
+    
   }
   
   .dashboard-header {
@@ -12,20 +13,19 @@
   
   .dashboard-intro p {
     font-size: 1.1rem;
-    color: #555;
+    color: black;
     margin-top: 10px;
   }
   
   .dashboard-sections {
     display: flex;
+    background-color: #fff;
     flex-direction: column;
     gap: 20px;
     margin-top: 30px;
   }
   
   .dashboard-section {
-    background-color: #1abc9c;
-    color: white;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -49,7 +49,7 @@
   
   .dashboard-section .section-btn {
     background-color: #fff;
-    color: #1abc9c;
+    color: black;
     border: none;
     padding: 12px 25px;
     border-radius: 5px;
@@ -59,13 +59,9 @@
   }
   
   .dashboard-section .section-btn:hover {
-    background-color: #16a085;
-    color: #fff;
+    color: grey;
   }
   
-  .dashboard-section:hover {
-    background-color: #16a085;
-  }
   
   .text-center {
     text-align: center;

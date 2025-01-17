@@ -10,6 +10,10 @@ import { UserService, User } from '../../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+export interface Role {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -17,12 +21,18 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
+  editMode: { [key: string]: boolean } = {
+    email: false,
+    fullname: false
+  };
   profileForm: FormGroup;
   username: string = ''; // Username of the logged-in user
   user: User | null = null;
+  roles: Role[]=[]; // Roles of the logged-in user
   loading: boolean = false;
   error: string | null = null;
-  editMode: boolean = false; // Flag to toggle between view and edit modes
+Object: any;
+   // Flag to toggle between view and edit modes
 
   constructor(
     private fb: FormBuilder,
@@ -41,6 +51,9 @@ export class ProfileComponent implements OnInit {
       this.error = 'User not logged in.';
       return;
     }
+    //get user roles
+    const rolesString = localStorage.getItem('roles') || '';
+    this.roles = JSON.parse(rolesString);
     this.loadUserProfile();
   }
 
@@ -62,38 +75,28 @@ export class ProfileComponent implements OnInit {
       },
     });
   }
-
-  updateProfile(): void {
-    if (this.profileForm.invalid) {
-      return;
+  toggleEdit(field: string): void {
+    this.editMode[field] = !this.editMode[field];
+    if (this.editMode[field]) {
+      this.profileForm.patchValue({
+        [field]: (this.user as any)?.[field]
+      });
     }
-
+  }
+  saveField(field: string): void {
     const updatedUser: Partial<User> = {
       fullname: this.profileForm.value.fullname,
       email: this.profileForm.value.email,
     };
-
-    this.userService.updateUser(this.username, updatedUser as User).subscribe({
-      next: (updatedUser) => {
-        alert('Profile updated successfully!');
-        this.user = updatedUser;
-        this.toggleEditMode(); // Switch back to view mode
-      },
-      error: (err) => {
-        console.error('Error updating profile:', err);
-        this.error = 'Failed to update profile.';
-      },
-    });
-  }
-
-  toggleEditMode(): void {
-    this.editMode = !this.editMode;
-
-    // If entering edit mode, reset form to current user values
-    if (this.editMode && this.user) {
-      this.profileForm.patchValue({
-        fullname: this.user.fullname,
-        email: this.user.email,
+    if (this.profileForm.get(field)?.valid) {
+      this.userService.updateUser(this.username,  updatedUser as User).subscribe({
+        next: (updatedUser) => {
+          this.user = updatedUser;
+          this.editMode[field] = false;
+        },
+        error: (error) => {
+          console.error('Error updating user:', error);
+        }
       });
     }
   }
