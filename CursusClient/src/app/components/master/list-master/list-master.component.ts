@@ -36,8 +36,6 @@ export class ListMasterComponent implements OnInit {
     });
   }
 
-  // Create a candidature for the selected master
-  // Create a candidature for the selected master
   createCandidature(masterId: number): void {
     if (!this.userId) {
       console.error('User is not logged in.');
@@ -51,7 +49,7 @@ export class ListMasterComponent implements OnInit {
         (response) => {
           console.log('Candidature created successfully:', response);
           alert('Candidature created successfully!');
-          this.router.navigate(['/candidatures']); // Optionally, navigate to a different page after creating the candidature
+          this.router.navigate(['/dashboard']);
         },
         (error) => {
           console.error('Error creating candidature:', error);
